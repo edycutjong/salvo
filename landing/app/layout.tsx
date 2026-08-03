@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { JetBrains_Mono, Manrope, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 
@@ -32,10 +32,11 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://edycutjong.github.io/salvo/'),
+  metadataBase: new URL('https://salvo.edycu.dev'),
   title: 'Salvo — Scored Ad Variants from One Brief | Batch Creative Factory on Genblaze + Backblaze B2',
   description:
     'Brief in → N scored ad variants out — the best three ship. Salvo is a batch creative factory on Genblaze + Backblaze B2: real pipeline fan-out, verified provenance, explainable deterministic ad ranking. Zero credentials to demo.',
+  applicationName: 'Salvo',
   keywords: [
     'ad variants',
     'creative brief',
@@ -48,20 +49,32 @@ export const metadata: Metadata = {
     'creative factory',
     'provenance manifest',
   ],
+  authors: [{ name: 'Edy Cu' }],
+  manifest: '/site.webmanifest',
+  alternates: { canonical: '/' },
   openGraph: {
+    type: 'website',
+    url: 'https://salvo.edycu.dev',
+    siteName: 'Salvo',
     title: 'Salvo — one ad is a guess, a salvo is a decision',
     description:
       'Brief in → N scored ad variants out — best three ship. Batch creative factory on Genblaze + Backblaze B2 with explainable, reproducible ranking.',
-    type: 'website',
-    images: ['icon-512.png'],
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Salvo — scored ad variants from one brief' }],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Salvo — one ad is a guess, a salvo is a decision',
     description:
       'Brief in → N scored ad variants out — best three ship. Explainable, reproducible ad ranking on Genblaze + Backblaze B2.',
-    images: ['icon-512.png'],
+    images: ['/og-image.png'],
   },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#08070f',
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
