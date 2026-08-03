@@ -11,6 +11,8 @@ const COLUMNS: Array<{
     heading: 'Product',
     links: [
       { label: 'Live console', href: LINKS.console, external: true },
+      { label: 'Demo video (2 min)', href: LINKS.video, external: true },
+      { label: 'Pitch deck', href: LINKS.pitch, external: true },
       { label: 'API docs (OpenAPI)', href: LINKS.apiDocs, external: true },
       { label: 'Health check', href: LINKS.health, external: true },
       { label: 'Source on GitHub', href: LINKS.github, external: true },

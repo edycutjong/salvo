@@ -1,6 +1,8 @@
 /** Single source of truth for every external destination on the page. */
 export const LINKS = {
   console: 'https://api.salvo.edycu.dev/console',
+  video: 'https://youtu.be/s50Px56hu8A',
+  pitch: 'https://salvo.edycu.dev/pitch.html',
   api: 'https://api.salvo.edycu.dev',
   apiDocs: 'https://api.salvo.edycu.dev/docs',
   health: 'https://api.salvo.edycu.dev/healthz',
