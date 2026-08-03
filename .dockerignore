@@ -1,0 +1,22 @@
+# never bake secrets or local state into the image
+.env
+.env.*
+!.env.example
+# vcs + local venv/caches
+.git
+.gitignore
+.venv
+__pycache__
+**/__pycache__
+.pytest_cache
+.ruff_cache
+# runtime state + build artifacts
+var
+dist
+*.egg-info
+# not needed at runtime
+tests
+docs
+node_modules
+**/node_modules
+.DS_Store

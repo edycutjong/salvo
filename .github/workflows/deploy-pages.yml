@@ -1,0 +1,69 @@
+name: Deploy landing to GitHub Pages
+
+# Builds the Next.js static export in landing/ and publishes it to GitHub Pages.
+# actions/configure-pages@v5 (static_site_generator: next) auto-detects the correct
+# basePath (project-page subpath OR a custom domain, both handled) and injects it
+# straight into landing/next.config.mjs before the build runs — no manual env var.
+# Public <img> refs are relative ("./…") and need no prefix.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'landing/**'
+  workflow_dispatch:
+
+# Allow one concurrent deployment; don't cancel an in-progress production deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: landing/package-lock.json
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          static_site_generator: next
+          generator_config_file: landing/next.config.mjs
+
+      - name: Install dependencies
+        working-directory: ./landing
+        run: npm ci
+
+      - name: Build static export
+        working-directory: ./landing
+        run: npm run build
+
+      - name: Disable Jekyll (serve _next/* verbatim)
+        run: touch landing/out/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./landing/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

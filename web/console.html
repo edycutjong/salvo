@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Salvo — Creative Console</title>
+<style>
+  :root{
+    --bg-0:#08070F; --bg-1:#0B0A12; --panel:#161324; --panel-2:#1C182E;
+    --line:rgba(167,158,203,.16); --line-2:rgba(167,158,203,.30);
+    --primary:#8B5CF6; --primary-2:#A78BFA; --accent:#EC4899; --success:#34D399;
+    --ink:#EDEBF6; --muted:#A29DB8; --faint:#6B6580;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,rgba(139,92,246,.14),transparent),var(--bg-0);
+    color:var(--ink);font:15px/1.55 "Inter",system-ui,sans-serif}
+  header{padding:22px 28px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  h1{font-size:20px;margin:0;letter-spacing:.01em;font-family:"Space Grotesk","Inter",sans-serif}
+  h1 b{background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tag{color:var(--muted);font-size:13px}
+  .mode{margin-left:auto;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--primary-2);
+    border:1px solid var(--line-2);border-radius:20px;padding:3px 10px}
+  main{max-width:1080px;margin:0 auto;padding:26px 28px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.04),transparent),var(--panel);
+    border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:22px}
+  label{display:block;color:var(--muted);font-size:12px;margin:0 0 6px;letter-spacing:.02em}
+  textarea,select,input{font:inherit;width:100%;background:var(--bg-1);color:var(--ink);
+    border:1px solid var(--line);border-radius:9px;padding:11px 13px;resize:vertical}
+  textarea{min-height:78px}
+  .controls{display:flex;gap:14px;align-items:end;margin-top:14px;flex-wrap:wrap}
+  .controls .n{width:130px;flex:0 0 auto}
+  button{font:inherit;font-weight:600;cursor:pointer;border:0;border-radius:9px;padding:12px 22px;color:#0b0a12;
+    background:linear-gradient(135deg,var(--primary),var(--accent));box-shadow:0 6px 20px rgba(139,92,246,.28)}
+  button:disabled{opacity:.55;cursor:not-allowed}
+  .meta-row{color:var(--muted);font-size:12.5px;margin-top:2px;display:flex;gap:18px;flex-wrap:wrap}
+  .meta-row b{color:var(--ink)}
+  .hash{color:var(--success);font-family:"JetBrains Mono",ui-monospace,monospace}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .variant{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    display:flex;flex-direction:column;transition:border-color .18s,transform .18s}
+  .variant:hover{border-color:var(--line-2);transform:translateY(-2px)}
+  .variant.top{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 10px 30px rgba(236,72,153,.18)}
+  .thumb{aspect-ratio:16/10;width:100%;object-fit:cover;background:var(--bg-1);display:block}
+  .vbody{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+  .vhead{display:flex;align-items:start;gap:10px;justify-content:space-between}
+  .headline{font-weight:600;font-size:15px;line-height:1.3}
+  .score{flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-weight:700;font-size:16px;color:var(--primary-2)}
+  .variant.top .score{color:var(--accent)}
+  .rankpill{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+  .variant.top .rankpill{color:var(--accent)}
+  .reasons{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
+  .reasons li{font-size:12px;color:var(--muted);padding-left:14px;position:relative}
+  .reasons li::before{content:"→";position:absolute;left:0;color:var(--primary)}
+  .sha{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--faint);word-break:break-all}
+  h2{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:26px 0 12px}
+  .err{color:#F472B6;font-size:13px}
+  .empty{color:var(--faint);font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <h1><b>Salvo</b> Creative Console</h1>
+  <span class="tag">brief in &rarr; N scored ad variants out &rarr; best three ship</span>
+  <span class="mode" id="mode">—</span>
+</header>
+<main>
+  <div class="card">
+    <label for="brief">Creative brief</label>
+    <textarea id="brief">eco water bottle for hikers who count every gram</textarea>
+    <div class="controls">
+      <div class="n">
+        <label for="n">Variants</label>
+        <select id="n">
+          <option>4</option><option selected>6</option><option>8</option><option>10</option><option>12</option>
+        </select>
+      </div>
+      <button id="go">Generate variants</button>
+    </div>
+    <div class="meta-row" id="summary"></div>
+  </div>
+
+  <div id="out"><p class="empty">Enter a brief and generate a batch to see scored variants.</p></div>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => (s||"").replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+fetch('/healthz').then(r=>r.json()).then(d=>{ $('#mode').textContent = d.mode + ' · genblaze ' + d.genblaze_version; }).catch(()=>{});
+
+function card(v, isTop){
+  return `<div class="variant ${isTop?'top':''}">
+    <img class="thumb" src="${v.image_url}" alt="variant ${v.index}" loading="lazy" />
+    <div class="vbody">
+      <div class="vhead">
+        <div>
+          <div class="rankpill">${isTop?'★ ':''}Rank #${v.rank}</div>
+          <div class="headline">${esc(v.headline)}</div>
+        </div>
+        <div class="score">${v.score.toFixed(1)}</div>
+      </div>
+      <ul class="reasons">${v.reasons.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
+      <div class="sha">sha256 ${esc(v.sha256.slice(0,24))}…</div>
+    </div>
+  </div>`;
+}
+
+function render(d){
+  const topIdx = new Set(d.top3.map(v=>v.index));
+  const top = d.top3.map(v=>card(v,true)).join('');
+  const rest = d.variants.filter(v=>!topIdx.has(v.index)).map(v=>card(v,false)).join('');
+  $('#summary').innerHTML =
+    `<span><b>${d.variants.length}</b> variants · <b>${d.n}</b> requested</span>`+
+    `<span>cost <b>$${d.cost_usd.toFixed(4)}</b></span>`+
+    `<span>manifest <span class="hash">${(d.manifest_hash||'').slice(0,16)}…</span> ${d.manifest_verified?'verified':'unverified'}</span>`+
+    `<span>${d.mode}</span>`;
+  $('#out').innerHTML =
+    `<h2>Top 3 — ship these</h2><div class="grid">${top}</div>`+
+    `<h2>Full batch</h2><div class="grid">${rest || '<p class="empty">—</p>'}</div>`;
+}
+
+async function generate(){
+  const brief = $('#brief').value.trim();
+  if(!brief){ $('#out').innerHTML = '<p class="err">Please enter a brief.</p>'; return; }
+  $('#go').disabled = true;
+  $('#out').innerHTML = '<p class="empty">Generating batch…</p>';
+  try{
+    const res = await fetch('/campaigns', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ brief, n: parseInt($('#n').value,10) }),
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    render(await res.json());
+  }catch(e){
+    $('#out').innerHTML = '<p class="err">Failed: '+esc(String(e.message||e))+'</p>';
+  }finally{
+    $('#go').disabled = false;
+  }
+}
+$('#go').addEventListener('click', generate);
+</script>
+</body>
+</html>

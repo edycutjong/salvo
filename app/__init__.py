@@ -1,0 +1,1 @@
+"""Salvo FastAPI application package."""

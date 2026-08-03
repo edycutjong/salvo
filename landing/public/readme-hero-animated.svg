@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 320" width="1280" height="320" role="img" aria-label="Salvo — animated: one brief fans out into scored variants, the board ranks them, and the top three are ringed and stored on Backblaze B2 with a verified manifest">
+  <!-- Standalone typography: wordmark = outlined Space Grotesk paths (zero font dependency); labels use built-in system stacks.
+       Zero external refs · SMIL + CSS only · renders animated inside GitHub README <img> · 8s master loop. -->
+  <defs>
+    <linearGradient id="vb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#A78BFA"/><stop offset=".55" stop-color="#8B5CF6"/><stop offset="1" stop-color="#6D28D9"/>
+    </linearGradient>
+    <linearGradient id="vp" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F472B6"/><stop offset="1" stop-color="#EC4899"/>
+    </linearGradient>
+    <linearGradient id="vbeam" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="rgba(237,235,246,0)"/><stop offset=".5" stop-color="rgba(237,235,246,.06)"/><stop offset="1" stop-color="rgba(237,235,246,0)"/>
+    </linearGradient>
+    <linearGradient id="scan" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="rgba(236,72,153,0)"/><stop offset=".5" stop-color="rgba(236,72,153,.35)"/><stop offset="1" stop-color="rgba(236,72,153,0)"/>
+    </linearGradient>
+    <pattern id="vgrid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="rgba(167,158,203,0.07)" stroke-width="1"/>
+    </pattern>
+    <filter id="vsoft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="vaur" x="-120%" y="-120%" width="340%" height="340%"><feGaussianBlur stdDeviation="46"/></filter>
+    <clipPath id="vstage"><rect x="1" y="1" width="1278" height="318" rx="24"/></clipPath>
+    <clipPath id="voClip"><path transform="translate(178,152)" d="M28.4 0L13.2 0L1.2-37.7L11.4-37.7L20.1-7L21.5-7L30.2-37.7L40.4-37.7L28.4 0M63.8 1.1Q58.2 1.1 53.7-1.2Q49.2-3.5 46.7-7.8Q44.1-12.2 44.1-18.2L44.1-19.5Q44.1-25.5 46.7-29.9Q49.2-34.2 53.7-36.5Q58.2-38.8 63.8-38.8Q69.5-38.8 73.9-36.5Q78.4-34.2 81-29.9Q83.6-25.5 83.6-19.5L83.6-18.2Q83.6-12.2 81-7.8Q78.4-3.5 73.9-1.2Q69.5 1.1 63.8 1.1M63.8-7.4Q68.2-7.4 71.1-10.3Q74-13.1 74-18.5L74-19.2Q74-24.5 71.2-27.4Q68.3-30.2 63.8-30.2Q59.4-30.2 56.5-27.4Q53.7-24.5 53.7-19.2L53.7-18.5Q53.7-13.1 56.5-10.3Q59.4-7.4 63.8-7.4"/></clipPath>
+    <style>
+      .d { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+      .m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .aur1 { animation: vd1 15s ease-in-out infinite alternate; }
+      .aur2 { animation: vd2 19s ease-in-out infinite alternate; }
+      @keyframes vd1 { from { transform: translate(0,0);} to { transform: translate(100px,26px);} }
+      @keyframes vd2 { from { transform: translate(0,0);} to { transform: translate(-80px,-30px);} }
+      .beam { animation: vsweep 8s linear infinite; }
+      @keyframes vsweep { 0% { transform: translateX(-360px) skewX(-18deg);} 60%,100% { transform: translateX(1560px) skewX(-18deg);} }
+      .brand-in { animation: vrise 8s cubic-bezier(.16,1,.3,1) infinite; }
+      @keyframes vrise { 0% { opacity:0; transform: translateY(14px);} 4%,96% { opacity:1; transform: translateY(0);} 100% { opacity:0; transform: translateY(0);} }
+      .shine { animation: vshine 3.4s ease-in-out infinite; }
+      @keyframes vshine { 0%,55% { transform: translateX(-120px) skewX(-24deg);} 90%,100% { transform: translateX(200px) skewX(-24deg);} }
+      .pulse-metric { animation: vpm 2.4s ease-in-out infinite; }
+      @keyframes vpm { 0%,100% { opacity:.75;} 50% { opacity:1;} }
+      .story { animation: vstory 8s linear infinite; }
+      @keyframes vstory { 0% { opacity:0;} 2%,96% { opacity:1;} 100% { opacity:0;} }
+      .tile { transform-box: fill-box; transform-origin: center; opacity: 0; animation: pop 8s cubic-bezier(.2,1.4,.4,1) infinite; }
+      @keyframes pop { 0% { opacity:0; transform: scale(.55);} 2.2% { opacity:1; transform: scale(1.1);} 3.4%,96% { opacity:1; transform: scale(1);} 100% { opacity:0;} }
+      .t1 { animation-delay: .64s; } .t2 { animation-delay: .76s; } .t3 { animation-delay: .88s; }
+      .t4 { animation-delay: 1.0s; } .t5 { animation-delay: 1.12s; } .t6 { animation-delay: 1.24s; }
+      .lift { transform-box: fill-box; transform-origin: center; animation: vlift 8s ease-in-out infinite; }
+      @keyframes vlift { 0%,48% { transform: scale(1);} 52%,90% { transform: scale(1.06);} 96%,100% { transform: scale(1);} }
+      .seal { transform-box: fill-box; transform-origin: center; animation: vseal 8s cubic-bezier(.2,1.4,.4,1) infinite; }
+      @keyframes vseal { 0%,66% { opacity:0; transform: scale(.5) rotate(-10deg);} 70% { opacity:1; transform: scale(1.12) rotate(1deg);} 72%,96% { opacity:1; transform: scale(1);} 100% { opacity:0;} }
+      .brf { animation: brf 2s ease-in-out infinite; }
+      @keyframes brf { 0%,100% { opacity:.8;} 50% { opacity:1;} }
+      @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+    </style>
+  </defs>
+
+  <!-- ===== Backdrop ===== -->
+  <rect x="1" y="1" width="1278" height="318" rx="24" fill="#0B0A12"/>
+  <g clip-path="url(#vstage)">
+    <g class="aur1"><circle cx="240" cy="20" r="190" fill="rgba(139,92,246,0.18)" filter="url(#vaur)"/></g>
+    <g class="aur2"><circle cx="1120" cy="310" r="170" fill="rgba(236,72,153,0.12)" filter="url(#vaur)"/></g>
+    <rect x="1" y="1" width="1278" height="318" fill="url(#vgrid)"/>
+    <g class="beam"><rect x="0" y="-40" width="220" height="400" fill="url(#vbeam)"/></g>
+  </g>
+  <rect x="1" y="1" width="1278" height="318" rx="24" fill="none" stroke="rgba(167,158,203,0.22)" stroke-width="2"/>
+
+  <!-- ===== Left: brand (outlined wordmark, standalone) ===== -->
+  <g class="brand-in">
+    <g transform="translate(64,34) scale(0.135)">
+      <rect x="0" y="0" width="200" height="200" rx="44" fill="url(#vb)" opacity="0.5"/>
+      <rect x="240" y="0" width="200" height="200" rx="44" fill="url(#vb)" opacity="0.75"/>
+      <rect x="0" y="240" width="200" height="200" rx="44" fill="url(#vb)" opacity="0.6"/>
+      <rect x="230" y="230" width="220" height="220" rx="50" fill="url(#vb)"/>
+      <rect x="212" y="212" width="256" height="256" rx="62" fill="none" stroke="url(#vp)" stroke-width="24"/>
+      <path d="M 292 348 L 328 384 L 392 308" fill="none" stroke="#fff" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g>
+      <path transform="translate(64,152)" fill="#F1EFF8" d="M23.5 1.1Q17.3 1.1 12.6-1.1Q7.9-3.3 5.2-7.4Q2.6-11.6 2.6-17.3L2.6-19.5L12.5-19.5L12.5-17.3Q12.5-12.5 15.4-10.1Q18.4-7.8 23.5-7.8Q28.7-7.8 31.2-9.8Q33.7-11.9 33.7-15Q33.7-17.3 32.5-18.6Q31.2-20 28.8-20.9Q26.4-21.7 23-22.5L21.3-22.9Q15.8-24.1 11.9-26Q8-27.8 5.9-30.9Q3.8-33.9 3.8-38.8Q3.8-43.6 6.1-47.1Q8.4-50.5 12.7-52.4Q16.9-54.3 22.6-54.3Q28.3-54.3 32.7-52.3Q37.2-50.4 39.7-46.5Q42.3-42.7 42.3-36.9L42.3-34.7L32.4-34.7L32.4-36.9Q32.4-40 31.2-41.8Q30-43.7 27.8-44.6Q25.6-45.4 22.6-45.4Q18-45.4 15.8-43.7Q13.7-42 13.7-39.1Q13.7-37.1 14.7-35.7Q15.7-34.4 17.8-33.4Q19.8-32.5 23-31.8L24.8-31.5Q30.5-30.2 34.7-28.3Q38.9-26.4 41.3-23.3Q43.6-20.2 43.6-15.4Q43.6-10.5 41.2-6.8Q38.7-3.1 34.2-1Q29.6 1.1 23.5 1.1M63.1 1.1Q59.1 1.1 55.9-0.3Q52.7-1.7 50.8-4.4Q48.9-7.1 48.9-11Q48.9-14.9 50.8-17.5Q52.7-20.1 56-21.5Q59.3-22.8 63.5-22.8L73.9-22.8L73.9-24.9Q73.9-27.6 72.2-29.3Q70.5-31 66.9-31Q63.3-31 61.6-29.4Q59.8-27.7 59.3-25.2L50.5-28.1Q51.4-31 53.4-33.4Q55.4-35.8 58.8-37.3Q62.2-38.8 67-38.8Q74.5-38.8 78.8-35Q83.1-31.3 83.1-24.2L83.1-10.2Q83.1-7.9 85.3-7.9L88.3-7.9L88.3 0L81.9 0Q79.1 0 77.3-1.4Q75.5-2.7 75.5-5L75.5-5.1L74-5.1Q73.7-4.2 72.7-2.7Q71.6-1.2 69.3-0.1Q67 1.1 63.1 1.1M64.8-6.7Q68.8-6.7 71.3-8.9Q73.9-11.2 73.9-14.9L73.9-15.7L64.2-15.7Q61.6-15.7 60-14.5Q58.5-13.4 58.5-11.3Q58.5-9.3 60.1-8Q61.7-6.7 64.8-6.7M104.9 0L95.3 0L95.3-53.2L104.9-53.2"/>
+      <path transform="translate(178,152)" fill="url(#vp)" d="M28.4 0L13.2 0L1.2-37.7L11.4-37.7L20.1-7L21.5-7L30.2-37.7L40.4-37.7L28.4 0M63.8 1.1Q58.2 1.1 53.7-1.2Q49.2-3.5 46.7-7.8Q44.1-12.2 44.1-18.2L44.1-19.5Q44.1-25.5 46.7-29.9Q49.2-34.2 53.7-36.5Q58.2-38.8 63.8-38.8Q69.5-38.8 73.9-36.5Q78.4-34.2 81-29.9Q83.6-25.5 83.6-19.5L83.6-18.2Q83.6-12.2 81-7.8Q78.4-3.5 73.9-1.2Q69.5 1.1 63.8 1.1M63.8-7.4Q68.2-7.4 71.1-10.3Q74-13.1 74-18.5L74-19.2Q74-24.5 71.2-27.4Q68.3-30.2 63.8-30.2Q59.4-30.2 56.5-27.4Q53.7-24.5 53.7-19.2L53.7-18.5Q53.7-13.1 56.5-10.3Q59.4-7.4 63.8-7.4"/>
+      <g clip-path="url(#voClip)"><rect class="shine" x="170" y="94" width="42" height="72" fill="rgba(255,255,255,0.35)"/></g>
+    </g>
+    <text class="d" x="66" y="190" font-size="19" fill="#A29DB8">Brief in, <tspan fill="#EDEBF6" font-weight="600">twenty scored ad variants out</tspan> — best three ship.</text>
+    <text class="m pulse-metric" x="66" y="228" font-size="14" fill="#F472B6" letter-spacing="3">BATCH FAN-OUT · EXPLAINABLE RANKING · TOP 3 SHIP</text>
+    <text class="m" x="66" y="260" font-size="13" fill="#6B6580">Genblaze Pipeline · Backblaze B2 · verified provenance · FastAPI</text>
+  </g>
+
+  <!-- ===== Right: the salvo (8s master timeline) ===== -->
+  <g class="story">
+    <!-- brief -->
+    <g class="m">
+      <rect class="brf" x="600" y="134" width="128" height="52" rx="11" fill="rgba(28,24,46,0.92)" stroke="rgba(167,158,203,0.35)"/>
+      <text x="664" y="156" text-anchor="middle" font-size="14" fill="#EDEBF6">brief.md</text>
+      <text x="664" y="174" text-anchor="middle" font-size="10.5" fill="#6B6580">palette · rules · tone</text>
+    </g>
+
+    <!-- tiles (pop on comet arrival) -->
+    <g class="m" font-size="13">
+      <g class="tile t1"><rect x="796" y="88" width="74" height="74" rx="12" fill="#171226" stroke="rgba(167,158,203,0.3)"/><text x="833" y="130" text-anchor="middle" fill="#EDEBF6" opacity="0">94<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.18;0.21;1" dur="8s" repeatCount="indefinite"/></text></g>
+      <g class="tile t2"><rect x="894" y="88" width="74" height="74" rx="12" fill="#171226" stroke="rgba(167,158,203,0.3)"/><text x="931" y="130" text-anchor="middle" fill="#EDEBF6" opacity="0">91<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.2;0.23;1" dur="8s" repeatCount="indefinite"/></text></g>
+      <g class="tile t3"><rect x="992" y="88" width="74" height="74" rx="12" fill="#171226" stroke="rgba(167,158,203,0.3)"/><text x="1029" y="130" text-anchor="middle" fill="#EDEBF6" opacity="0">88<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.22;0.25;1" dur="8s" repeatCount="indefinite"/></text></g>
+      <g class="tile t4"><rect x="796" y="178" width="74" height="74" rx="12" fill="#171226" stroke="rgba(167,158,203,0.3)"/><text x="833" y="220" text-anchor="middle" fill="#EDEBF6" opacity="0">76<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.24;0.27;1" dur="8s" repeatCount="indefinite"/></text></g>
+      <g class="tile t5"><rect x="894" y="178" width="74" height="74" rx="12" fill="#171226" stroke="rgba(167,158,203,0.3)"/><text x="931" y="220" text-anchor="middle" fill="#EDEBF6" opacity="0">83<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.26;0.29;1" dur="8s" repeatCount="indefinite"/></text></g>
+      <g class="tile t6"><rect x="992" y="178" width="74" height="74" rx="12" fill="#171226" stroke="rgba(167,158,203,0.3)">
+          <animate attributeName="opacity" values="1;1;0.4;0.4" keyTimes="0;0.4;0.44;1" dur="8s" repeatCount="indefinite"/></rect>
+        <text x="1029" y="220" text-anchor="middle" fill="#6B6580" opacity="0">62<animate attributeName="opacity" values="0;0;1;1;0.4;0.4" keyTimes="0;0.28;0.31;0.4;0.44;1" dur="8s" repeatCount="indefinite"/></text></g>
+    </g>
+
+    <!-- scan beam ranks the board -->
+    <rect x="788" y="80" width="286" height="10" fill="url(#scan)" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.9;0.9;0;0" keyTimes="0;0.32;0.34;0.4;0.42;1" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="80;80;252;252" keyTimes="0;0.32;0.42;1" dur="8s" repeatCount="indefinite"/>
+    </rect>
+
+    <!-- top-3 rings (draw), pick = tile 1 -->
+    <g fill="none" stroke-linecap="round">
+      <rect class="lift" x="790" y="82" width="86" height="86" rx="15" stroke="url(#vp)" stroke-width="3.5" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100">
+        <animate attributeName="stroke-dashoffset" values="100;100;0;0" keyTimes="0;0.44;0.52;1" dur="8s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="988" y="84" width="82" height="82" rx="14" stroke="rgba(236,72,153,0.45)" stroke-width="2" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100">
+        <animate attributeName="stroke-dashoffset" values="100;100;0;0" keyTimes="0;0.46;0.53;1" dur="8s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="890" y="174" width="82" height="82" rx="14" stroke="rgba(236,72,153,0.45)" stroke-width="2" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100">
+        <animate attributeName="stroke-dashoffset" values="100;100;0;0" keyTimes="0;0.47;0.54;1" dur="8s" repeatCount="indefinite"/>
+      </rect>
+      <path d="M 818 126 L 830 138 L 852 112" stroke="#fff" stroke-width="5" stroke-linejoin="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100">
+        <animate attributeName="stroke-dashoffset" values="100;100;0;0" keyTimes="0;0.52;0.56;1" dur="8s" repeatCount="indefinite"/>
+      </path>
+    </g>
+
+    <!-- B2 delivery -->
+    <g class="m">
+      <circle cx="1178" cy="160" r="10" fill="none" stroke="#34D399" stroke-width="2" opacity="0">
+        <animate attributeName="r" values="10;10;50;50" keyTimes="0;0.62;0.72;1" dur="8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0;0.8;0;0" keyTimes="0;0.62;0.65;0.72;1" dur="8s" repeatCount="indefinite"/>
+      </circle>
+      <rect x="1104" y="116" width="148" height="88" rx="14" fill="rgba(28,24,46,0.92)" stroke="rgba(139,92,246,0.45)">
+        <animate attributeName="stroke" values="rgba(139,92,246,.4);rgba(139,92,246,.4);rgba(52,211,153,.95);rgba(139,92,246,.5)" keyTimes="0;0.62;0.68;1" dur="8s" repeatCount="indefinite"/>
+      </rect>
+      <text x="1178" y="146" text-anchor="middle" font-size="14.5" fill="#A78BFA" font-weight="600">Backblaze B2 🔒</text>
+      <text x="1178" y="166" text-anchor="middle" font-size="11" fill="#6B6580">stored + manifest</text>
+      <g class="seal">
+        <rect x="1126" y="176" width="104" height="20" rx="10" fill="none" stroke="#34D399" stroke-width="1.5"/>
+        <text x="1178" y="190" text-anchor="middle" font-size="11.5" fill="#34D399">top 3 ✓</text>
+      </g>
+    </g>
+    <text class="m" x="931" y="292" text-anchor="middle" font-size="12.5" fill="#A29DB8" opacity="0">explainable ranking · <tspan fill="#F472B6">top 3 ship</tspan> · verified provenance · <tspan fill="#34D399">manifest ✓</tspan>
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.76;1" dur="8s" repeatCount="indefinite"/>
+    </text>
+
+    <!-- the salvo: six tracers -->
+    <g filter="url(#vsoft)" opacity=".9">
+      <circle r="4" fill="#F472B6"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.05;0.10;1" calcMode="linear" path="M 728 150 C 760 120 800 118 833 125"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.05;0.055;0.10;0.11;1" dur="8s" repeatCount="indefinite"/></circle>
+      <circle r="4" fill="#A78BFA"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.065;0.115;1" calcMode="linear" path="M 728 150 C 790 96 870 100 931 125"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.065;0.07;0.115;0.125;1" dur="8s" repeatCount="indefinite"/></circle>
+      <circle r="4" fill="#F472B6"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.08;0.13;1" calcMode="linear" path="M 728 150 C 820 76 960 86 1029 125"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.08;0.085;0.13;0.14;1" dur="8s" repeatCount="indefinite"/></circle>
+      <circle r="4" fill="#A78BFA"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.095;0.145;1" calcMode="linear" path="M 728 172 C 760 200 800 212 833 215"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.095;0.1;0.145;0.155;1" dur="8s" repeatCount="indefinite"/></circle>
+      <circle r="4" fill="#F472B6"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.11;0.16;1" calcMode="linear" path="M 728 172 C 790 226 870 224 931 215"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.11;0.115;0.16;0.17;1" dur="8s" repeatCount="indefinite"/></circle>
+      <circle r="4" fill="#A78BFA"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.125;0.175;1" calcMode="linear" path="M 728 172 C 820 244 960 240 1029 215"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.125;0.13;0.175;0.185;1" dur="8s" repeatCount="indefinite"/></circle>
+      <!-- promote comet: pick → B2, arcing over the board -->
+      <circle r="5" fill="#F472B6"><animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.56;0.63;1" calcMode="linear" path="M 872 125 C 980 56 1060 84 1112 138"/><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.56;0.57;0.63;0.64;1" dur="8s" repeatCount="indefinite"/></circle>
+    </g>
+  </g>
+</svg>

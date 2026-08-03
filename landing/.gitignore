@@ -1,0 +1,5 @@
+# build artifacts (GitHub Pages workflow rebuilds these in CI)
+node_modules/
+.next/
+out/
+*.tsbuildinfo
