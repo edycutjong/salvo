@@ -1,4 +1,4 @@
-import { ArrowRight, Github } from 'lucide-react';
+import { ArrowRight, Crosshair, Github } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { ButtonLink } from '@/components/ui/button';
 import { CountUp } from '@/components/count-up';
@@ -91,7 +91,7 @@ export function Hero() {
         <div className="min-w-0">
           <div className="animate-fade-up" style={{ animationDelay: '0ms' }}>
             <Badge>
-              <span aria-hidden="true">📝</span> Backblaze Generative Media Hackathon · Genblaze + B2
+              <Crosshair className="inline h-3.5 w-3.5 -mt-0.5 text-violet-strong" aria-hidden="true" /> Backblaze Generative Media Hackathon · Genblaze + B2
             </Badge>
           </div>
 
