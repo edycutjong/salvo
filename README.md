@@ -19,6 +19,10 @@
   ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
   ![Genblaze](https://img.shields.io/badge/Genblaze_0.4.1-6366F1?style=flat)
   ![Backblaze B2](https://img.shields.io/badge/Backblaze_B2-E21E29?style=flat&logo=backblaze&logoColor=white)
+  [![Tests](https://img.shields.io/badge/tests-19_passing-2ea44f?style=flat&logo=pytest&logoColor=white)](tests)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat)](LICENSE)
+  [![Release](https://img.shields.io/github/v/release/edycutjong/salvo?style=flat&logo=github&label=release&color=8b5cf6)](https://github.com/edycutjong/salvo/releases)
+  [![CI/CD Pipeline](https://img.shields.io/github/actions/workflow/status/edycutjong/salvo/ci.yml?branch=main&style=flat&logo=githubactions&logoColor=white&label=CI%2FCD)](https://github.com/edycutjong/salvo/actions/workflows/ci.yml)
 
 </div>
 
@@ -104,4 +108,4 @@ engine imports `pytest` at module load, so it is a runtime dependency of the dem
 
 ## 📄 License
 
-MIT — see [LICENSE](LICENSE).
+[MIT](LICENSE) © 2026 Edy Cu
