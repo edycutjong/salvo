@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__version__ = "1.4.0"
+__version__ = "1.5.0"
 
 from salvo.backends import LocalDirBackend
 from salvo.config import settings
