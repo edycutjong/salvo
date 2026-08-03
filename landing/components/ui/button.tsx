@@ -10,7 +10,7 @@ type Size = 'sm' | 'md' | 'lg' | 'xl';
 
 const variantClasses: Record<Variant, string> = {
   primary:
-    'bg-gradient-to-br from-violet via-violet to-flare text-night-1 font-semibold ' +
+    'bg-gradient-to-br from-violet-deep via-violet to-flare text-white font-semibold ' +
     'shadow-[0_8px_28px_rgba(139,92,246,0.35)] hover:shadow-[0_10px_40px_rgba(236,72,153,0.4)] ' +
     'hover:scale-[1.03] active:scale-[0.98]',
   ghost:

@@ -205,12 +205,12 @@ export function LiveDemo() {
                 >
                   Creative brief
                 </label>
-                <textarea
+                <input
                   id="demo-brief"
+                  type="text"
                   value={brief}
                   onChange={(e) => setBrief(e.target.value)}
-                  rows={2}
-                  className="w-full resize-none rounded-xl border border-line bg-night-1 px-4 py-3 text-[15px] text-ink outline-none transition-colors duration-200 placeholder:text-ink-faint focus:border-violet/60"
+                  className="h-12 w-full rounded-xl border border-line bg-night-1 px-4 text-[15px] text-ink outline-none transition-colors duration-200 placeholder:text-ink-faint focus:border-violet/60"
                   placeholder="what are we selling, and to whom?"
                 />
               </div>
