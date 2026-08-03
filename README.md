@@ -11,6 +11,7 @@
   [![API](https://img.shields.io/badge/🔌_API-Live-ec4899?style=for-the-badge)](https://api.salvo.edycu.dev/docs)
   [![Pitch Deck](https://img.shields.io/badge/📊_Pitch-Deck-f59e0b?style=for-the-badge)](https://salvo.edycu.dev/pitch.html)
   [![Pitch Video](https://img.shields.io/badge/🎬_Pitch-Video-ef4444?style=for-the-badge)](https://youtu.be/s50Px56hu8A)
+  [![Devpost Project](https://img.shields.io/badge/Devpost-View_Project-003E54?style=for-the-badge&logo=devpost&logoColor=white)](https://devpost.com/software/salvo)
   [![Built for Hackathon](https://img.shields.io/badge/Devpost-Backblaze_Generative_Media-8b5cf6?style=for-the-badge)](https://backblaze-generative-media.devpost.com)
 
   <br/>
