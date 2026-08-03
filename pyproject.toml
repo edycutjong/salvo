@@ -81,3 +81,6 @@ allow_zero_version = true                 # stay in 0.x until a deliberate 1.0.0
 
 [tool.semantic_release.branches.main]
 match = "main"
+
+[tool.uv]
+override-dependencies = ["pillow>=12.3.0"]
