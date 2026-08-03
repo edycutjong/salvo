@@ -107,6 +107,16 @@ Dockerized for Railway (`Dockerfile` + `railway.json`, healthcheck `/healthz`, b
 `0.0.0.0:$PORT`). The image installs dev dependencies on purpose — Genblaze's OFFLINE mock
 engine imports `pytest` at module load, so it is a runtime dependency of the demo path.
 
+## 🙏 Acknowledgments
+
+Built for the **[Backblaze Generative Media Hackathon](https://backblaze-generative-media.devpost.com)** on **[Genblaze](https://pypi.org/project/genblaze/) + [Backblaze B2](https://www.backblaze.com/cloud-storage)**. Thanks to the sponsors — Backblaze for B2 object storage and provenance, and GMI Cloud for FLUX image inference (the real-generation provider behind the pipeline):
+
+<p align="center">
+  <a href="https://www.backblaze.com/cloud-storage"><img src="docs/sponsors/backblaze.png" height="46" alt="Backblaze" /></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://www.gmicloud.ai"><img src="docs/sponsors/gmi.png" height="46" alt="GMI Cloud" /></a>
+</p>
+
 ## 📄 License
 
 [MIT](LICENSE) © 2026 Edy Cu
