@@ -1,6 +1,6 @@
 [project]
 name = "salvo"
-version = "1.0.0"
+version = "1.1.0"
 description = "Salvo — brief in, N scored ad variants out, best three ship. Batch creative factory on Genblaze + Backblaze B2."
 readme = "README.md"
 requires-python = ">=3.11"
