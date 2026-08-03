@@ -8,205 +8,431 @@
 <link rel="icon" href="/icon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<!--
+  SALVO — PITCH DECK  ·  single-file, offline-resilient
+  ───────────────────────────────────────────────────────────
+  KEYS:  ← / →  or  Space   navigate      ·  Home/End  jump
+         P  presenter mode (speaker notes)  ·  ESC  slide overview grid
+         C  contrast-debug outlines
+  PRINT: Cmd/Ctrl+P → Save as PDF → Landscape → clean 10-page deck
+  SWAP:  demo image at /assets/console-demo.png (real product screenshot)
+-->
 <style>
   :root{
-    --bg-0:#08070F; --bg-1:#0B0A12; --panel:#161324; --panel-2:#1C182E;
-    --line:rgba(167,158,203,.16); --line-2:rgba(167,158,203,.30);
-    --violet:#8B5CF6; --violet-2:#A78BFA; --violet-deep:#6D28D9; --accent:#EC4899; --accent-2:#F472B6;
-    --mint:#34D399; --ink:#EDEBF6; --muted:#A29DB8; --faint:#87829C;
+    --bg:#0A0910; --bg-2:#0F0D18; --panel:#161324; --panel-2:#1C182E;
+    --line:rgba(167,158,203,.16); --line-2:rgba(167,158,203,.32);
+    --primary:#8B5CF6; --primary-2:#A78BFA; --primary-deep:#6D28D9;
+    --accent:#EC4899; --accent-2:#F472B6; --mint:#34D399;
+    --ink:#F3F1FA; --muted:#A29DB8; --faint:#7C7690;
+    --font-display:"Space Grotesk","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --font-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --font-mono:"JetBrains Mono","SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{background:var(--bg-0);color:var(--ink);font-family:"Manrope",system-ui,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased}
-  .deck{position:fixed;inset:0}
-  .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
-    padding:clamp(28px,6vw,96px);opacity:0;visibility:hidden;transform:translateY(14px);
-    transition:opacity .5s ease,transform .5s ease,visibility .5s;
-    background:radial-gradient(1100px 600px at 78% -12%,rgba(139,92,246,.14),transparent),var(--bg-0)}
+  html,body{height:100%;background:#050409;overflow:hidden}
+  body{font-family:var(--font-body);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+  /* fixed 1920x1080 stage, scaled to viewport (letterbox the browser, not the slide) */
+  .stage-wrap{position:fixed;inset:0;display:grid;place-items:center;background:#050409}
+  #stage{width:1920px;height:1080px;position:relative;transform-origin:center center;overflow:hidden;
+    background:radial-gradient(1400px 720px at 80% -14%,rgba(139,92,246,.16),transparent),
+               radial-gradient(1000px 620px at 8% 116%,rgba(236,72,153,.10),transparent),var(--bg)}
+  .slide{position:absolute;inset:0;padding:96px 120px;opacity:0;visibility:hidden;
+    transform:translateX(40px);transition:opacity .45s ease,transform .45s ease,visibility .45s;
+    display:flex;flex-direction:column;justify-content:center}
   .slide.active{opacity:1;visibility:visible;transform:none}
-  .kicker{font-family:"JetBrains Mono",monospace;font-size:clamp(11px,1.1vw,13px);letter-spacing:.22em;
-    text-transform:uppercase;color:var(--violet-2);margin-bottom:18px}
-  h1{font-family:"Space Grotesk",sans-serif;font-weight:700;line-height:1.02;letter-spacing:-.02em;
-    font-size:clamp(38px,7vw,88px)}
-  h2{font-family:"Space Grotesk",sans-serif;font-weight:700;line-height:1.05;letter-spacing:-.01em;
-    font-size:clamp(28px,4.6vw,52px);margin-bottom:22px}
-  .grad{background:linear-gradient(120deg,var(--violet-2),var(--violet) 45%,var(--accent));
+  .slide.prev{transform:translateX(-40px)}
+
+  /* grid backdrop lines */
+  #stage::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background-image:linear-gradient(rgba(167,158,203,.04) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(167,158,203,.04) 1px,transparent 1px);background-size:80px 80px}
+
+  .kicker{font-family:var(--font-mono);font-size:16px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--primary-2);margin-bottom:26px;display:flex;align-items:center;gap:14px}
+  .kicker::before{content:"";width:34px;height:2px;background:linear-gradient(90deg,var(--primary),var(--accent))}
+  h1{font-family:var(--font-display);font-weight:700;font-size:128px;line-height:.98;letter-spacing:-.03em}
+  h2{font-family:var(--font-display);font-weight:700;font-size:76px;line-height:1.02;letter-spacing:-.02em;margin-bottom:34px}
+  .grad{background:linear-gradient(115deg,var(--primary-2),var(--primary) 42%,var(--accent));
     -webkit-background-clip:text;background-clip:text;color:transparent}
-  .lead{font-size:clamp(17px,2vw,24px);color:var(--muted);max-width:60ch;line-height:1.5}
-  .big{font-size:clamp(20px,2.4vw,30px);line-height:1.4;max-width:24ch}
-  ul{list-style:none;display:flex;flex-direction:column;gap:14px;margin-top:8px}
-  li{position:relative;padding-left:30px;font-size:clamp(15px,1.7vw,20px);color:var(--ink);line-height:1.45;max-width:62ch}
-  li::before{content:"";position:absolute;left:0;top:.55em;width:12px;height:12px;border-radius:3px;
-    background:linear-gradient(135deg,var(--violet),var(--accent))}
-  .muted{color:var(--muted)} .mono{font-family:"JetBrains Mono",monospace}
-  code{font-family:"JetBrains Mono",monospace;background:rgba(139,92,246,.14);color:var(--violet-2);
-    padding:2px 7px;border-radius:6px;font-size:.9em}
-  .grid{display:grid;gap:18px;margin-top:10px}
-  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
-  .card{background:linear-gradient(180deg,rgba(255,255,255,.04),transparent),var(--panel);
-    border:1px solid var(--line);border-radius:16px;padding:22px 24px}
-  .card .w{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:clamp(26px,3.4vw,40px);
-    background:linear-gradient(135deg,var(--violet-2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .card .t{font-weight:700;font-size:clamp(15px,1.6vw,18px);margin:6px 0 6px}
-  .card .d{color:var(--muted);font-size:clamp(12.5px,1.3vw,14.5px);line-height:1.5}
-  .stat{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:clamp(30px,4.4vw,56px);
-    background:linear-gradient(135deg,var(--violet-2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px}
-  .node{background:var(--panel);border:1px solid var(--line-2);border-radius:12px;padding:14px 18px;
-    font-family:"JetBrains Mono",monospace;font-size:clamp(12px,1.3vw,15px);line-height:1.4}
-  .node b{color:var(--violet-2)} .node.pick{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
-  .arrow{color:var(--violet-2);font-size:22px}
-  .title-badge{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line-2);
-    border-radius:999px;padding:8px 16px;font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--muted);margin-bottom:26px}
-  .icon{width:46px;height:46px;flex:0 0 auto}
-  .row{display:flex;align-items:center;gap:16px}
-  .links{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
-  .btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;border-radius:999px;
-    padding:13px 24px;font-size:clamp(14px,1.5vw,16px);transition:transform .15s,box-shadow .15s}
+  .lead{font-size:30px;line-height:1.5;color:var(--muted);max-width:30ch}
+  .lead b{color:var(--ink);font-weight:600}
+  .mono{font-family:var(--font-mono)} .muted{color:var(--muted)} .accent{color:var(--accent-2)}
+  code{font-family:var(--font-mono);background:rgba(139,92,246,.16);color:var(--primary-2);padding:3px 9px;border-radius:7px;font-size:.86em}
+  ul{list-style:none;display:flex;flex-direction:column;gap:22px;margin-top:6px}
+  li{position:relative;padding-left:40px;font-size:27px;line-height:1.4;max-width:40ch;color:var(--ink)}
+  li b{font-weight:700}
+  li::before{content:"";position:absolute;left:0;top:.42em;width:16px;height:16px;border-radius:4px;
+    background:linear-gradient(135deg,var(--primary),var(--accent))}
+
+  .cols{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;height:100%}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.045),transparent),var(--panel);
+    border:1px solid var(--line);border-radius:22px;padding:34px 36px}
+  .stat{font-family:var(--font-mono);font-weight:700;font-size:76px;line-height:1;
+    background:linear-gradient(135deg,var(--primary-2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .card .t{font-weight:700;font-size:24px;margin:14px 0 8px}
+  .card .d{color:var(--muted);font-size:19px;line-height:1.5}
+  .badge{display:inline-flex;align-items:center;gap:12px;border:1px solid var(--line-2);border-radius:999px;
+    padding:12px 22px;font-family:var(--font-mono);font-size:18px;color:var(--muted);margin-bottom:40px}
+
+  /* browser frame */
+  .browser{border:1px solid var(--line-2);border-radius:16px;overflow:hidden;background:var(--bg-2);
+    box-shadow:0 40px 120px rgba(0,0,0,.55),0 0 0 1px rgba(139,92,246,.12)}
+  .browser .bar{display:flex;align-items:center;gap:16px;padding:14px 18px;background:#100E1A;border-bottom:1px solid var(--line)}
+  .browser .dots{display:flex;gap:9px}.browser .dots i{width:14px;height:14px;border-radius:50%;background:#3a3550;display:block}
+  .browser .url{flex:1;background:#0b0912;border:1px solid var(--line);border-radius:8px;padding:8px 16px;
+    font-family:var(--font-mono);font-size:16px;color:var(--faint)}
+  .browser img{display:block;width:100%}
+
+  /* numbered callouts */
+  .callout{position:absolute;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+    font-family:var(--font-mono);font-weight:700;font-size:20px;color:#fff;
+    background:linear-gradient(135deg,var(--primary),var(--accent));box-shadow:0 8px 24px rgba(236,72,153,.5);
+    border:3px solid #fff2}
+  .co-label{position:absolute;font-size:20px;font-weight:600;color:var(--ink);background:rgba(16,13,24,.92);
+    border:1px solid var(--line-2);border-radius:10px;padding:8px 14px;white-space:nowrap}
+
+  /* architecture flow */
+  .flow{display:flex;align-items:stretch;gap:0;margin-top:20px}
+  .fnode{flex:1;background:linear-gradient(180deg,rgba(255,255,255,.04),transparent),var(--panel);
+    border:1px solid var(--line);border-radius:18px;padding:28px 26px;position:relative}
+  .fnode.pick{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 20px 60px rgba(236,72,153,.18)}
+  .fnode .s{font-family:var(--font-mono);font-size:15px;color:var(--faint);letter-spacing:.1em}
+  .fnode .h{font-family:var(--font-mono);font-weight:700;font-size:22px;color:var(--primary-2);margin:8px 0 8px}
+  .fnode.pick .h{color:var(--accent-2)}
+  .fnode .p{color:var(--muted);font-size:17px;line-height:1.4}
+  .farrow{align-self:center;color:var(--primary-2);font-size:30px;padding:0 18px;flex:0 0 auto}
+
+  .links{display:flex;gap:18px;flex-wrap:wrap;margin-top:40px}
+  .btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;border-radius:999px;
+    padding:18px 30px;font-size:22px;transition:transform .15s}
   .btn:hover{transform:translateY(-2px)}
-  .btn.p{color:#fff;background:linear-gradient(135deg,var(--violet-deep),var(--violet) 55%,var(--accent));
-    box-shadow:0 10px 30px rgba(139,92,246,.35)}
+  .btn.p{color:#fff;background:linear-gradient(135deg,var(--primary-deep),var(--primary) 55%,var(--accent));box-shadow:0 14px 40px rgba(139,92,246,.4)}
   .btn.s{color:var(--ink);border:1px solid var(--line-2);background:rgba(255,255,255,.03)}
-  /* chrome */
-  .brand{position:fixed;top:22px;left:26px;display:flex;align-items:center;gap:10px;z-index:10;
-    font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:15px}
-  .brand .grad{font-weight:700}
-  .dots{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:9px;z-index:10}
-  .dot{width:9px;height:9px;border-radius:50%;background:var(--line-2);border:0;cursor:pointer;padding:0;transition:all .2s}
-  .dot.on{background:linear-gradient(135deg,var(--violet-2),var(--accent));transform:scale(1.25)}
-  .nav{position:fixed;bottom:20px;right:26px;display:flex;gap:8px;z-index:10}
-  .nav button{width:40px;height:40px;border-radius:10px;border:1px solid var(--line-2);background:rgba(255,255,255,.03);
-    color:var(--ink);font-size:18px;cursor:pointer;transition:all .15s}
-  .nav button:hover{border-color:var(--violet);color:var(--violet-2)}
-  .count{position:fixed;bottom:30px;left:26px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--faint);z-index:10}
-  .hint{position:fixed;top:24px;right:26px;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--faint);z-index:10}
-  @media(max-width:720px){.g3,.g4,.g2{grid-template-columns:1fr}.flow{flex-direction:column;align-items:flex-start}.arrow{transform:rotate(90deg)}}
+  .qr{width:150px;height:150px;border-radius:16px;border:1px solid var(--line-2);
+    background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150'><rect width='150' height='150' fill='white'/><g fill='black'><rect x='12' y='12' width='34' height='34'/><rect x='104' y='12' width='34' height='34'/><rect x='12' y='104' width='34' height='34'/><rect x='20' y='20' width='18' height='18' fill='white'/><rect x='112' y='20' width='18' height='18' fill='white'/><rect x='20' y='112' width='18' height='18' fill='white'/><rect x='60' y='16' width='10' height='10'/><rect x='76' y='28' width='10' height='10'/><rect x='60' y='44' width='10' height='10'/><rect x='60' y='72' width='10' height='10'/><rect x='84' y='72' width='10' height='10'/><rect x='104' y='72' width='10' height='10'/><rect x='120' y='84' width='10' height='10'/><rect x='72' y='104' width='10' height='10'/><rect x='96' y='112' width='10' height='10'/><rect x='120' y='120' width='10' height='10'/></g></svg>") center/contain no-repeat;background-size:cover}
+
+  /* cover animated mark */
+  .mark{width:150px;height:150px}
+  .mark .ring{transform-origin:336px 336px;animation:ringpulse 4s ease-in-out infinite}
+  @keyframes ringpulse{0%,100%{opacity:1}50%{opacity:.55}}
+  .mark .chk{stroke-dasharray:120;stroke-dashoffset:120;animation:draw 4s ease-in-out infinite}
+  @keyframes draw{0%{stroke-dashoffset:120}25%,100%{stroke-dashoffset:0}}
+  .cover-badges{display:flex;gap:16px;margin-top:44px;flex-wrap:wrap}
+  .pill{font-family:var(--font-mono);font-size:17px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:10px 18px}
+  .pulse{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--mint);margin-right:9px;
+    box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:pd 2.4s infinite}
+  @keyframes pd{0%{box-shadow:0 0 0 0 rgba(52,211,153,.6)}70%{box-shadow:0 0 0 14px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+
+  /* chrome: brand, counter, nav, hint */
+  .brand{position:absolute;top:44px;left:120px;display:flex;align-items:center;gap:12px;z-index:5;
+    font-family:var(--font-display);font-weight:700;font-size:24px}
+  .counter{position:absolute;bottom:44px;right:120px;font-family:var(--font-mono);font-size:20px;color:var(--faint);z-index:5}
+  .dotsnav{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);display:flex;gap:11px;z-index:5}
+  .dotsnav button{width:11px;height:11px;border-radius:50%;background:var(--line-2);border:0;cursor:pointer;padding:0;transition:.2s}
+  .dotsnav button.on{background:linear-gradient(135deg,var(--primary-2),var(--accent));transform:scale(1.3)}
+  .hint{position:absolute;top:48px;right:120px;font-family:var(--font-mono);font-size:15px;color:var(--faint);z-index:5}
+  .foot-brand{position:absolute;bottom:46px;left:120px;font-family:var(--font-mono);font-size:15px;color:var(--faint);z-index:5}
+
+  /* speaker notes / presenter mode */
+  .speaker-notes{display:none}
+  body.presenter #stage{height:864px}
+  body.presenter .notes-panel{display:flex}
+  .notes-panel{display:none;position:fixed;left:0;right:0;bottom:0;height:calc(50vh - 432px);min-height:150px;
+    background:#08070d;border-top:1px solid var(--line-2);padding:26px 40px;z-index:20;
+    flex-direction:column;gap:8px;font-size:22px;line-height:1.5;color:var(--ink)}
+  .notes-panel .nk{font-family:var(--font-mono);font-size:14px;letter-spacing:.2em;color:var(--primary-2);text-transform:uppercase}
+
+  /* overview grid (ESC) */
+  .overview{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(5,4,9,.97);z-index:30;
+    padding:60px;flex-wrap:wrap;gap:24px;align-content:center;justify-content:center;overflow:auto}
+  body.overview .overview{display:flex}
+  .ov-cell{width:400px;height:225px;flex:0 0 auto;border:1px solid var(--line-2);border-radius:12px;overflow:hidden;cursor:pointer;
+    position:relative;background:var(--panel);transition:border-color .15s,transform .15s}
+  .ov-cell:hover{border-color:var(--primary);transform:translateY(-3px)}
+  .ov-cell .n{position:absolute;top:8px;left:10px;font-family:var(--font-mono);font-size:13px;color:var(--primary-2);z-index:2}
+  .ov-cell .ttl{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;
+    font-family:var(--font-display);font-weight:600;font-size:19px;color:var(--ink);
+    background:linear-gradient(180deg,rgba(139,92,246,.10),transparent)}
+
+  /* contrast debug */
+  body.debug-contrast h1,body.debug-contrast h2,body.debug-contrast li,
+  body.debug-contrast .lead,body.debug-contrast .d,body.debug-contrast p{outline:1px solid #f0f}
+
+  /* PRINT — clean 10-page landscape PDF */
+  @page{size:16in 9in landscape;margin:0}
+  @media print{
+    html,body{overflow:visible;background:#fff}
+    .stage-wrap{position:static;display:block}
+    #stage{width:16in;height:auto;overflow:visible;transform:none!important;background:var(--bg)}
+    #stage::before{display:none}
+    .slide{position:relative;inset:auto;opacity:1!important;visibility:visible!important;transform:none!important;
+      page-break-inside:avoid;break-inside:avoid;page-break-after:always;width:16in;height:9in;padding:0.9in 1.1in}
+    .hint,.dotsnav,.notes-panel,.overview,.brand .kbd{display:none!important}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    html,body,.slide,#stage{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
 </style>
 </head>
 <body>
-<div class="brand">
-  <svg class="icon" style="width:26px;height:26px" viewBox="0 0 512 512" aria-hidden="true"><defs><linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A78BFA"/><stop offset=".55" stop-color="#8B5CF6"/><stop offset="1" stop-color="#6D28D9"/></linearGradient><linearGradient id="p" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F472B6"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs><rect x="28" y="28" width="456" height="456" rx="104" fill="#0c0a1a"/><rect x="112" y="112" width="128" height="128" rx="28" fill="url(#b)" opacity=".45"/><rect x="272" y="112" width="128" height="128" rx="28" fill="url(#b)" opacity=".7"/><rect x="112" y="272" width="128" height="128" rx="28" fill="url(#b)" opacity=".55"/><rect x="264" y="264" width="144" height="144" rx="32" fill="url(#b)"/><rect x="252" y="252" width="168" height="168" rx="40" fill="none" stroke="url(#p)" stroke-width="16"/><path d="M306 338l24 24 42-48" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  <span><span class="grad">Salvo</span></span>
-</div>
-<div class="hint">← → to navigate</div>
+<div class="stage-wrap">
+<div id="stage">
 
-<div class="deck" id="deck">
-
-  <section class="slide">
-    <div class="title-badge">◎ Backblaze Generative Media Hackathon · Genblaze + B2</div>
-    <h1>One ad is a guess.<br/><span class="grad">A salvo is a decision.</span></h1>
-    <p class="lead" style="margin-top:26px">A batch creative factory on Genblaze + Backblaze B2: a brief fans out into <b>N scored ad variants</b>, every variant stored with verified provenance — and the best three ship.</p>
+  <!-- SLIDE 1 · COVER -->
+  <section class="slide" data-title="Cover">
+    <div style="display:flex;align-items:center;gap:34px;margin-bottom:18px">
+      <svg class="mark" viewBox="0 0 512 512" aria-label="Salvo mark"><defs>
+        <linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A78BFA"/><stop offset=".55" stop-color="#8B5CF6"/><stop offset="1" stop-color="#6D28D9"/></linearGradient>
+        <linearGradient id="p" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F472B6"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs>
+        <rect x="28" y="28" width="456" height="456" rx="104" fill="#0c0a1a" stroke="rgba(167,158,203,.18)" stroke-width="3"/>
+        <rect x="112" y="112" width="128" height="128" rx="28" fill="url(#b)" opacity=".45"/>
+        <rect x="272" y="112" width="128" height="128" rx="28" fill="url(#b)" opacity=".7"/>
+        <rect x="112" y="272" width="128" height="128" rx="28" fill="url(#b)" opacity=".55"/>
+        <rect x="264" y="264" width="144" height="144" rx="32" fill="url(#b)"/>
+        <rect class="ring" x="252" y="252" width="168" height="168" rx="40" fill="none" stroke="url(#p)" stroke-width="16"/>
+        <path class="chk" d="M306 338l24 24 42-48" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <div class="kicker" style="margin-bottom:14px">Backblaze Generative Media Hackathon</div>
+        <h1><span class="grad">Salvo</span></h1>
+      </div>
+    </div>
+    <p class="lead" style="font-size:38px;max-width:40ch;color:var(--ink)">One ad is a guess. <span class="grad" style="font-weight:700">A salvo is a decision.</span></p>
+    <div class="cover-badges">
+      <span class="pill"><span class="pulse"></span>Live · OFFLINE demo, zero credentials</span>
+      <span class="pill">Genblaze · Backblaze B2</span>
+      <span class="pill">Python · FastAPI</span>
+    </div>
+    <aside class="speaker-notes"><span class="nk">Say</span>Salvo turns one creative brief into a batch of scored ad variants. The whole thing runs with zero credentials, so I can show it live right now — no setup, no API keys.</aside>
   </section>
 
-  <section class="slide">
-    <div class="kicker">The problem</div>
-    <h2>One-shot generation is a <span class="grad">gamble</span>.</h2>
-    <p class="big muted">You ask a model for an ad and get <b style="color:var(--ink)">one</b> image. No batch, no comparison, no reason <i>why</i> it's good. Teams ship a guess and hope.</p>
+  <!-- SLIDE 2 · HOOK -->
+  <section class="slide" data-title="Hook">
+    <div class="kicker">The hook</div>
+    <h1 style="font-size:150px;max-width:16ch">Six shots.<br/><span class="grad">One decision.</span></h1>
+    <p class="lead" style="font-size:32px;margin-top:30px">A brief fans out into N ad variants, each scored on transparent signals — and the top three ship with the reason attached.</p>
+    <aside class="speaker-notes"><span class="nk">Say</span>Nobody ships their first draft of anything. Salvo makes that batch-and-choose loop the product — and every score comes with a receipt.</aside>
   </section>
 
-  <section class="slide">
-    <div class="kicker">The solution</div>
-    <h2>Brief in → <span class="grad">N scored variants</span> out → best three ship.</h2>
-    <ul>
-      <li><b>Real fan-out</b> — one brief becomes N ad-image variants through a genuine Genblaze pipeline, run in parallel.</li>
-      <li><b>Verified provenance</b> — every variant lands in Backblaze B2 with a manifest that's read back and hash-checked.</li>
-      <li><b>Explainable ranking</b> — deterministic scores with a plain-English reason for every number. Same brief, same result.</li>
-    </ul>
+  <!-- SLIDE 3 · PROBLEM -->
+  <section class="slide" data-title="Problem">
+    <div class="cols">
+      <div>
+        <div class="kicker">The problem</div>
+        <h2>One-shot generation<br/>is a <span class="grad">gamble</span>.</h2>
+        <p class="lead" style="font-size:28px">It's 11pm before a launch. Maya asks a model for an ad and gets <b>one</b> image. No batch to compare, no score, no reason why — so she ships a guess and hopes it converts.</p>
+      </div>
+      <div class="card" style="background:var(--bg-2)">
+        <div class="mono" style="color:var(--faint);font-size:17px;margin-bottom:16px">// the usual output</div>
+        <div class="mono" style="font-size:21px;line-height:2.1;color:var(--muted)">
+          prompt → <span class="accent">1 image</span><br/>
+          comparison → <span class="accent">none</span><br/>
+          score → <span class="accent">none</span><br/>
+          "why this one?" → <span class="accent">vibes</span><br/>
+          audit trail → <span class="accent">✗</span>
+        </div>
+      </div>
+    </div>
+    <aside class="speaker-notes"><span class="nk">Say</span>The real pain isn't generation quality — it's that you get one option with no way to compare or justify it. That's a gamble on every launch.</aside>
   </section>
 
-  <section class="slide">
-    <div class="kicker">How it works</div>
-    <h2>Four real SDK moves.</h2>
+  <!-- SLIDE 4 · SOLUTION -->
+  <section class="slide" data-title="Solution">
+    <div class="cols">
+      <div>
+        <div class="kicker">The solution</div>
+        <h2>Brief in.<br/><span class="grad">Best three out.</span></h2>
+        <ul>
+          <li><b>Real fan-out</b> — N variants through one Genblaze pipeline</li>
+          <li><b>Stored with provenance</b> — every variant lands in Backblaze B2</li>
+          <li><b>Ranked, explained</b> — deterministic scores + a plain-English reason</li>
+        </ul>
+      </div>
+      <div class="browser">
+        <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">api.salvo.edycu.dev/console</div></div>
+        <!-- SWAP: replace with /assets/console-demo.png -->
+        <img src="/assets/console-demo.png" alt="Salvo console — scored variant grid with top 3 ringed" style="height:520px;object-fit:cover;object-position:top" />
+      </div>
+    </div>
+    <aside class="speaker-notes"><span class="nk">Say</span>This is the whole product: type a brief, fire a batch, get N scored variants back with the top three ringed. That's the real console, not a mockup.</aside>
+  </section>
+
+  <!-- SLIDE 5 · HOW IT WORKS -->
+  <section class="slide" data-title="Architecture">
+    <div class="kicker">How it works — four real SDK moves</div>
+    <h2 style="font-size:56px">Genblaze fans out. <span class="grad">B2 holds the truth.</span></h2>
     <div class="flow">
-      <div class="node">Brief</div><span class="arrow">→</span>
-      <div class="node"><b>Pipeline.astream</b><br/>N-way fan-out</div><span class="arrow">→</span>
-      <div class="node"><b>ObjectStorageSink</b><br/>Backblaze B2 · provenance</div><span class="arrow">→</span>
-      <div class="node"><b>read_manifest</b><br/>verify=True</div><span class="arrow">→</span>
-      <div class="node pick">rank → top 3</div>
+      <div class="fnode"><div class="s">01 · INPUT</div><div class="h">brief</div><div class="p">one line of intent</div></div>
+      <div class="farrow">→</div>
+      <div class="fnode"><div class="s">02 · GENBLAZE</div><div class="h">Pipeline.astream</div><div class="p">N-way parallel fan-out (mc=N)</div></div>
+      <div class="farrow">→</div>
+      <div class="fnode"><div class="s">03 · BACKBLAZE B2</div><div class="h">ObjectStorageSink</div><div class="p">campaigns/{date}/{run}/…</div></div>
+      <div class="farrow">→</div>
+      <div class="fnode"><div class="s">04 · VERIFY</div><div class="h">read_manifest</div><div class="p">verify=True · hash-checked</div></div>
+      <div class="farrow">→</div>
+      <div class="fnode pick"><div class="s">05 · DECIDE</div><div class="h">rank → top 3</div><div class="p">explainable scores</div></div>
     </div>
-    <p class="lead mono" style="margin-top:26px;font-size:clamp(12px,1.3vw,15px)">OFFLINE=1 runs the whole path on a local StorageBackend · B2_KEY_ID flips storage to a real bucket.</p>
+    <p class="lead mono" style="font-size:20px;margin-top:44px;max-width:none"><code>OFFLINE=1</code> runs the whole path on a local StorageBackend &nbsp;·&nbsp; <code>B2_KEY_ID</code> flips storage to a real bucket — same code.</p>
+    <aside class="speaker-notes"><span class="nk">Say</span>Four moves, all real SDK calls: fan out with astream, store through the B2 sink, read the manifest back with verify, then rank. The sponsor SDK is the engine, not a sticker.</aside>
   </section>
 
-  <section class="slide">
-    <div class="kicker">Sponsor integration — the SDK is the engine</div>
-    <h2>Genblaze fans out. <span class="grad">Backblaze B2</span> holds the truth.</h2>
-    <div class="grid g2">
-      <div class="card"><div class="t">Genblaze — the pipeline</div><div class="d">Real <code>Pipeline.astream(max_concurrency=N)</code> fan-out, the documented <code>StorageBackend</code> interface, and <code>read_manifest(verify=True)</code> provenance — not a for-loop of fakes.</div></div>
-      <div class="card"><div class="t">Backblaze B2 — the store</div><div class="d">Every variant is written through an object-storage sink with hierarchical keys <code>campaigns/{date}/{run}/…</code> and a manifest that verifies on read.</div></div>
+  <!-- SLIDE 6 · LIVE DEMO -->
+  <section class="slide" data-title="Live demo">
+    <div class="kicker">Live demo — one brief, six scored variants</div>
+    <div style="position:relative;width:1180px;margin-top:10px">
+      <div class="browser">
+        <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">api.salvo.edycu.dev/console</div></div>
+        <!-- SWAP: replace with /assets/console-demo.png -->
+        <img src="/assets/console-demo.png" alt="Salvo console populated with scored variants" />
+      </div>
+      <div class="callout" style="top:120px;left:-22px">1</div>
+      <div class="co-label" style="top:118px;left:36px">brief + presets</div>
+      <div class="callout" style="top:96px;right:-22px">2</div>
+      <div class="co-label" style="top:94px;right:36px">manifest verified ✓</div>
+      <div class="callout" style="bottom:250px;left:-22px">3</div>
+      <div class="co-label" style="bottom:248px;left:36px">top 3 — magenta ring</div>
+      <div class="callout" style="bottom:120px;right:-22px">4</div>
+      <div class="co-label" style="bottom:118px;right:36px">score + reasons</div>
     </div>
+    <aside class="speaker-notes"><span class="nk">Show</span>Type a brief, hit Fire. Six variants pop in, the scan ranks them, the top three get the ring — and every score expands into the exact reasons. Same brief always lands the same way.</aside>
   </section>
 
-  <section class="slide">
-    <div class="kicker">Explainable scoring</div>
-    <h2>Every score ships its <span class="grad">receipt</span>.</h2>
-    <div class="grid g3">
-      <div class="card"><div class="w">0.45</div><div class="t">Brief coverage</div><div class="d">how many of the brief's keywords the headline actually uses</div></div>
-      <div class="card"><div class="w">0.25</div><div class="t">Headline length</div><div class="d">closeness to the 22–42 character scannable sweet spot</div></div>
-      <div class="card"><div class="w">0.30</div><div class="t">Engagement index</div><div class="d">a deterministic pseudo-signal seeded from the content hash</div></div>
+  <!-- SLIDE 7 · SCORING / FEATURES -->
+  <section class="slide" data-title="Scoring">
+    <div class="kicker">Every score ships its receipt</div>
+    <h2 style="font-size:60px">Three transparent signals.</h2>
+    <div class="flow" style="gap:26px">
+      <div class="fnode"><div class="stat" style="font-size:64px">0.45</div><div class="t" style="font-weight:700;font-size:24px;margin-top:10px">Brief coverage</div><div class="p" style="margin-top:6px">keywords the headline actually uses</div></div>
+      <div class="fnode"><div class="stat" style="font-size:64px">0.25</div><div class="t" style="font-weight:700;font-size:24px;margin-top:10px">Headline length</div><div class="p" style="margin-top:6px">closeness to the 22–42 char sweet spot</div></div>
+      <div class="fnode"><div class="stat" style="font-size:64px">0.30</div><div class="t" style="font-weight:700;font-size:24px;margin-top:10px">Engagement index</div><div class="p" style="margin-top:6px">deterministic, seeded from the content hash</div></div>
     </div>
-    <p class="muted" style="margin-top:22px;font-size:15px">Honesty note: the engagement index is <b style="color:var(--ink)">not</b> real CTR data — it's a reproducible stand-in, and every reason string says so.</p>
+    <p class="lead" style="font-size:22px;margin-top:38px;max-width:none">Honesty note: the engagement index is <b>not</b> real CTR data — it's a reproducible stand-in, and every reason string says so.</p>
+    <aside class="speaker-notes"><span class="nk">Say</span>Weights are fixed and visible, and the engagement signal is honestly labeled as a deterministic stand-in — we never present a fabricated metric as real. That honesty is a feature for judges.</aside>
   </section>
 
-  <section class="slide">
-    <div class="kicker">Proof</div>
-    <h2>Reproducible, <span class="grad">always-green</span>, honest.</h2>
-    <div class="grid g4">
-      <div class="card"><div class="stat">0</div><div class="d">credentials needed to demo — OFFLINE mock provider + local store</div></div>
-      <div class="card"><div class="stat">19</div><div class="d">pytest tests, green offline end-to-end</div></div>
-      <div class="card"><div class="stat">100%</div><div class="d">line coverage across the app + engine</div></div>
-      <div class="card"><div class="stat">✓</div><div class="d">manifest hash-verified on every run</div></div>
+  <!-- SLIDE 8 · WHY IT WORKS -->
+  <section class="slide" data-title="Why us">
+    <div class="cols">
+      <div>
+        <div class="kicker">Why it works</div>
+        <h2>Narrow flow,<br/><span class="grad">devastatingly done.</span></h2>
+        <ul>
+          <li><b>SDK depth</b> — real astream fan-out, sink, and manifest verify</li>
+          <li><b>Determinism</b> — same brief, same board, every time</li>
+          <li><b>Provenance</b> — every variant is stored and hash-verifiable</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="mono" style="color:var(--faint);font-size:16px;margin-bottom:18px">$ OFFLINE=1 pytest -q</div>
+        <div class="mono" style="font-size:20px;line-height:2;color:var(--muted)">
+          <span style="color:var(--mint)">19 passed</span> in 3.1s<br/>
+          coverage&nbsp;&nbsp;<span style="color:var(--mint)">100%</span><br/>
+          manifest&nbsp;<span style="color:var(--mint)">verified ✓</span><br/>
+          creds needed&nbsp;<span class="accent">0</span>
+        </div>
+      </div>
     </div>
+    <aside class="speaker-notes"><span class="nk">Say</span>We went deep on one flow instead of wide on many. The result is reproducible, fully tested, and demoable anywhere with zero setup.</aside>
   </section>
 
-  <section class="slide">
-    <div class="kicker">Why it wins · what's next</div>
-    <h2>Narrow flow, <span class="grad">devastatingly done</span>.</h2>
-    <ul>
-      <li>One creative decision, end-to-end on the real SDK — depth over breadth.</li>
-      <li>Determinism + provenance make it demoable, reproducible, and honest.</li>
-      <li><span class="muted">Next:</span> live vendor image providers, A/B export to ad platforms, human-in-the-loop overrides on the ranking.</li>
-    </ul>
-    <div class="links">
-      <a class="btn p" href="https://salvo.edycu.dev" target="_blank" rel="noreferrer">Live landing →</a>
-      <a class="btn s" href="https://api.salvo.edycu.dev/console" target="_blank" rel="noreferrer">Open the console</a>
-      <a class="btn s" href="https://github.com/edycutjong/salvo" target="_blank" rel="noreferrer">Source</a>
+  <!-- SLIDE 9 · TRACTION -->
+  <section class="slide" data-title="Shipped">
+    <div class="kicker">Shipped, live, reproducible</div>
+    <h2 style="font-size:60px">What's already <span class="grad">running</span>.</h2>
+    <div class="flow" style="gap:22px">
+      <div class="fnode"><div class="stat">19</div><div class="p" style="margin-top:10px">pytest tests, green offline end-to-end</div></div>
+      <div class="fnode"><div class="stat">100%</div><div class="p" style="margin-top:10px">line coverage · app + engine</div></div>
+      <div class="fnode"><div class="stat" style="font-size:64px">2</div><div class="p" style="margin-top:10px">live surfaces — landing + real API console</div></div>
+      <div class="fnode pick"><div class="stat" style="font-size:64px">CI</div><div class="p" style="margin-top:10px">7-stage pipeline, deploy on green</div></div>
     </div>
+    <p class="lead mono" style="font-size:19px;margin-top:40px;max-width:none">salvo.edycu.dev &nbsp;·&nbsp; api.salvo.edycu.dev/console &nbsp;·&nbsp; github.com/edycutjong/salvo</p>
+    <aside class="speaker-notes"><span class="nk">Say</span>This isn't a slideware prototype — landing, real API console, CI/CD, and full test coverage are all live right now. Everything on this slide is verifiable.</aside>
+  </section>
+
+  <!-- SLIDE 10 · THE ASK -->
+  <section class="slide" data-title="The ask">
+    <div class="cols">
+      <div>
+        <div class="kicker">The ask</div>
+        <h2>Fire one <span class="grad">yourself.</span></h2>
+        <p class="lead" style="font-size:27px">Open the console, type any brief, and watch six scored variants land — no signup, no keys. Then tell us which three you'd ship.</p>
+        <div class="links">
+          <a class="btn p" href="https://api.salvo.edycu.dev/console" target="_blank" rel="noreferrer">Open the live console →</a>
+          <a class="btn s" href="https://salvo.edycu.dev" target="_blank" rel="noreferrer">Landing</a>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
+        <!-- SWAP: replace with real QR to api.salvo.edycu.dev/console -->
+        <div class="qr" aria-label="QR to live console"></div>
+        <div class="mono muted" style="font-size:17px;text-align:center">scan → api.salvo.edycu.dev/console</div>
+      </div>
+    </div>
+    <aside class="speaker-notes"><span class="nk">Close</span>The best proof is your own brief. Scan the code, fire a salvo, and pick your top three — the console will already be waiting.</aside>
   </section>
 
 </div>
+</div>
 
-<div class="count" id="count">01 / 08</div>
-<div class="dots" id="dots"></div>
-<div class="nav"><button id="prev" aria-label="Previous">‹</button><button id="next" aria-label="Next">›</button></div>
+<!-- chrome -->
+<div class="hint" id="hint">← → navigate · P notes · ESC grid</div>
+<div class="counter" id="counter">01 / 10</div>
+<div class="dotsnav" id="dotsnav"></div>
+
+<!-- presenter notes panel -->
+<div class="notes-panel" id="notesPanel"><span class="nk">Speaker notes</span><div id="notesText"></div></div>
+
+<!-- overview grid -->
+<div class="overview" id="overview"></div>
 
 <script>
+  const stage = document.getElementById('stage');
   const slides = [...document.querySelectorAll('.slide')];
-  const dotsWrap = document.getElementById('dots');
-  const count = document.getElementById('count');
+  const counter = document.getElementById('counter');
+  const dotsnav = document.getElementById('dotsnav');
+  const overview = document.getElementById('overview');
+  const notesText = document.getElementById('notesText');
   let i = 0;
-  slides.forEach((_, n) => {
-    const b = document.createElement('button'); b.className = 'dot'; b.setAttribute('aria-label','Slide '+(n+1));
-    b.addEventListener('click', () => go(n)); dotsWrap.appendChild(b);
-  });
-  const dots = [...dotsWrap.children];
-  const pad = n => String(n).padStart(2,'0');
-  function go(n){
-    i = Math.max(0, Math.min(slides.length-1, n));
-    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
-    dots.forEach((d,k)=>d.classList.toggle('on',k===i));
-    count.textContent = pad(i+1)+' / '+pad(slides.length);
+
+  // fit 1920x1080 stage to viewport (accounts for presenter mode height)
+  function fit(){
+    const h = document.body.classList.contains('presenter') ? 864 : 1080;
+    const s = Math.min(window.innerWidth/1920, (document.body.classList.contains('presenter')? window.innerHeight*0.5 : window.innerHeight)/h);
+    stage.style.transform = `scale(${s})`;
+    stage.style.height = h+'px';
   }
-  document.getElementById('next').addEventListener('click',()=>go(i+1));
-  document.getElementById('prev').addEventListener('click',()=>go(i-1));
+  addEventListener('resize', fit);
+
+  // dots + overview cells
+  slides.forEach((sl,n)=>{
+    const b=document.createElement('button'); b.setAttribute('aria-label','Slide '+(n+1)); b.onclick=()=>go(n); dotsnav.appendChild(b);
+    const c=document.createElement('div'); c.className='ov-cell';
+    c.innerHTML=`<div class="n">${String(n+1).padStart(2,'0')}</div><div class="ttl">${sl.dataset.title||('Slide '+(n+1))}</div>`;
+    c.onclick=()=>{go(n);overview.style.display='none'}; overview.appendChild(c);
+  });
+  const dots=[...dotsnav.children];
+  const pad=n=>String(n).padStart(2,'0');
+
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>{s.classList.toggle('active',k===i);s.classList.toggle('prev',k<i)});
+    dots.forEach((d,k)=>d.classList.toggle('on',k===i));
+    counter.textContent=pad(i+1)+' / '+pad(slides.length);
+    const note=slides[i].querySelector('.speaker-notes');
+    notesText.innerHTML=note?note.innerHTML.replace(/<span class="nk">.*?<\/span>/,''):'';
+  }
   addEventListener('keydown',e=>{
     if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(i+1)}
-    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1)}
-    if(e.key==='Home')go(0); if(e.key==='End')go(slides.length-1);
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1)}
+    else if(e.key==='Home'){go(0)} else if(e.key==='End'){go(slides.length-1)}
+    else if(e.key==='Escape'){overview.style.display=(overview.style.display==='flex')?'none':'flex'}
+    else if(e.key==='p'||e.key==='P'){document.body.classList.toggle('presenter');fit()}
+    else if(e.key==='c'||e.key==='C'){document.body.classList.toggle('debug-contrast')}
   });
+  // swipe
   let sx=null; addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
   addEventListener('touchend',e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50)go(i+(dx<0?1:-1));sx=null});
-  go(0);
+  fit(); go(0);
 </script>
 </body>
 </html>
