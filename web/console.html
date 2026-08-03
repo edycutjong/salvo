@@ -53,7 +53,8 @@
     display:flex;flex-direction:column;transition:border-color .18s,transform .18s}
   .variant:hover{border-color:var(--line-2);transform:translateY(-2px)}
   .variant.top{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 10px 30px rgba(236,72,153,.18)}
-  .thumb{aspect-ratio:16/10;width:100%;object-fit:cover;background:var(--bg-1);display:block}
+  .thumb{aspect-ratio:16/7;width:100%;object-fit:cover;display:block;
+    background:linear-gradient(135deg,rgba(139,92,246,.16),rgba(236,72,153,.12)),var(--bg-1)}
   .vbody{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
   .vhead{display:flex;align-items:start;gap:10px;justify-content:space-between}
   .headline{font-weight:600;font-size:15px;line-height:1.3}
@@ -68,6 +69,17 @@
   h2{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:26px 0 12px}
   .err{color:#F472B6;font-size:13px}
   .empty{color:var(--faint);font-size:13px}
+  .idle{border:1px dashed var(--line-2);border-radius:16px;padding:34px 26px;text-align:center;
+    background:linear-gradient(180deg,rgba(255,255,255,.02),transparent)}
+  .idle h3{margin:0 0 6px;font-family:"Space Grotesk",sans-serif;font-size:16px;color:var(--ink)}
+  .idle p{margin:0 auto 22px;max-width:440px;color:var(--muted);font-size:13px}
+  .signals{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:640px;margin:0 auto}
+  .sig{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-align:left}
+  .sig .w{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:18px;
+    background:linear-gradient(135deg,var(--primary-2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sig .n{font-size:13px;font-weight:600;margin:2px 0 3px}
+  .sig .d{font-size:11.5px;color:var(--muted);line-height:1.45}
+  @media(max-width:640px){.signals{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -93,7 +105,17 @@
     <div class="meta-row" id="summary"></div>
   </div>
 
-  <div id="out"><p class="empty">Enter a brief and generate a batch to see scored variants.</p></div>
+  <div id="out">
+    <div class="idle">
+      <h3>Enter a brief and fire a batch</h3>
+      <p>Every variant is scored on three transparent, deterministic signals — the same brief always lands the same way. The top three get the ring.</p>
+      <div class="signals">
+        <div class="sig"><div class="w">0.45</div><div class="n">Brief coverage</div><div class="d">how many of the brief's keywords the headline actually uses</div></div>
+        <div class="sig"><div class="w">0.25</div><div class="n">Headline length</div><div class="d">closeness to the 22–42 character scannable sweet spot</div></div>
+        <div class="sig"><div class="w">0.30</div><div class="n">Engagement index</div><div class="d">deterministic pseudo-signal seeded from the content hash</div></div>
+      </div>
+    </div>
+  </div>
 </main>
 
 <script>
