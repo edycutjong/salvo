@@ -25,18 +25,14 @@ give it a creative brief, it fans out `N` ad-image variants through one real Gen
 `Pipeline`, stores every variant (with provenance) through a B2 object sink, scores them
 with an **explainable, deterministic** ranking, and surfaces the top 3 to ship.
 
-## How it works
+## ⚙️ How it works
 
-```
-brief ──► N MockAdProvider steps (one PNG + headline each)
-            │   genblaze Pipeline.astream(max_concurrency=N)  ← real fan-out
-            ▼
-       ObjectStorageSink(LocalDirBackend, HIERARCHICAL) ──► campaigns/{date}/{run}/…
-            │   read_manifest(verify=True)                ← provenance read back
-            ▼
-       ranking.rank_variants(brief, variants)             ← explainable scores
-            ▼
-       top-3 = the three highest-scoring variants
+```mermaid
+flowchart TD
+    A([Brief]) --> B["N × MockAdProvider steps<br/>one PNG + headline each"]
+    B -->|"genblaze Pipeline.astream(max_concurrency=N)<br/><b>real fan-out</b>"| C["ObjectStorageSink<br/>LocalDirBackend · HIERARCHICAL<br/>campaigns/{date}/{run}/…"]
+    C -->|"read_manifest(verify=True)<br/><b>provenance read back</b>"| D["ranking.rank_variants(brief, variants)<br/><b>explainable scores</b>"]
+    D --> E([Top-3 — the three highest-scoring variants])
 ```
 
 Every variant is scored on three transparent signals, and each score ships with a
@@ -52,7 +48,7 @@ plain-English breakdown of exactly how it was reached:
 > deterministic stand-in seeded from the content hash so the ranking is reproducible
 > offline, and every reason string says so. No fabricated metrics are presented as real.
 
-## OFFLINE mode (the always-green demo path)
+## 🟢 OFFLINE mode (the always-green demo path)
 
 Salvo runs with **zero credentials** by default. `OFFLINE=1` (the default) uses a mock
 image provider that emits real PNG bytes (via a dependency-free raw-PNG encoder — no
@@ -63,7 +59,7 @@ ranking — exercises real Genblaze code paths without touching the network.
 Setting `B2_KEY_ID` / `B2_APP_KEY` switches storage to a real Backblaze B2 bucket via
 Genblaze's `S3StorageBackend`; the app auto-detects credentials at startup.
 
-## Quickstart
+## 🚀 Quickstart
 
 ```bash
 uv sync --extra dev
@@ -90,19 +86,19 @@ curl -X POST localhost:8000/campaigns \
   -d '{"brief":"eco water bottle for hikers","n":6}'
 ```
 
-## Tests
+## ✅ Tests
 
 19 pytest tests (`OFFLINE=1 .venv/bin/python -m pytest`) covering: the campaign runs
 offline end-to-end, the ranking is deterministic + explainable, the top-3 are the three
 highest scorers, manifest provenance verifies, stored variant PNGs are valid, and the
 FastAPI surface (health, create/fetch, PNG serving).
 
-## Deploy
+## 🚢 Deploy
 
 Dockerized for Railway (`Dockerfile` + `railway.json`, healthcheck `/healthz`, binds
 `0.0.0.0:$PORT`). The image installs dev dependencies on purpose — Genblaze's OFFLINE mock
 engine imports `pytest` at module load, so it is a runtime dependency of the demo path.
 
-## License
+## 📄 License
 
 MIT — see [LICENSE](LICENSE).
