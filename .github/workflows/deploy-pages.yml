@@ -1,7 +1,7 @@
 name: Deploy landing to GitHub Pages
 
 # Builds the Next.js static export in landing/ and publishes it to GitHub Pages.
-# actions/configure-pages@v5 (static_site_generator: next) auto-detects the correct
+# actions/configure-pages@v6 (static_site_generator: next) auto-detects the correct
 # basePath (project-page subpath OR a custom domain, both handled) and injects it
 # straight into landing/next.config.mjs before the build runs — no manual env var.
 # Public <img> refs are relative ("./…") and need no prefix.
@@ -36,7 +36,7 @@ jobs:
           cache-dependency-path: landing/package-lock.json
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
         with:
           static_site_generator: next
           generator_config_file: landing/next.config.mjs
