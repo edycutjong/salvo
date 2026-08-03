@@ -10,7 +10,7 @@ dependencies = [
     # Sponsor spine. Umbrella pin brings genblaze-core (+ genblaze-s3). The OFFLINE
     # path relies only on genblaze-core (MockProvider / SyncProvider extension point).
     "genblaze==0.4.1",
-    "fastapi>=0.110",
+    "fastapi>=0.141.1",
     "uvicorn[standard]>=0.29",
     "httpx>=0.27",
     # Security floor for a transitive dep (via pyasn1-modules): pyasn1 < 0.6.4 has
