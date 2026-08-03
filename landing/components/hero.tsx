@@ -91,7 +91,7 @@ export function Hero() {
         <div className="min-w-0">
           <div className="animate-fade-up" style={{ animationDelay: '0ms' }}>
             <Badge>
-              <span aria-hidden="true">🎯</span> Backblaze Generative Media Hackathon · Genblaze + B2
+              <span aria-hidden="true">📝</span> Backblaze Generative Media Hackathon · Genblaze + B2
             </Badge>
           </div>
 
