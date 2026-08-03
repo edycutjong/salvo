@@ -24,7 +24,7 @@ providers = [
     "genblaze[image,openai]==0.4.1",
 ]
 dev = [
-    "pytest>=8.0",
+    "pytest>=9.1.1",
     "pytest-asyncio>=0.23",
     "pytest-cov>=5.0",
     "ruff>=0.5",
@@ -59,7 +59,7 @@ filterwarnings = [
 
 [dependency-groups]
 dev = [
-    "pytest>=8.0",
+    "pytest>=9.1.1",
     "pytest-asyncio>=0.23",
     "pytest-cov>=5.0",
     "ruff>=0.5",
