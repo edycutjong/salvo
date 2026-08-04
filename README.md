@@ -20,7 +20,7 @@
   ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
   ![Genblaze](https://img.shields.io/badge/Genblaze_0.4.1-6366F1?style=flat)
   ![Backblaze B2](https://img.shields.io/badge/Backblaze_B2-E21E29?style=flat&logo=backblaze&logoColor=white)
-  [![Tests](https://img.shields.io/badge/tests-19_passing-2ea44f?style=flat&logo=pytest&logoColor=white)](tests)
+  [![Tests](https://img.shields.io/badge/tests-37_passing-2ea44f?style=flat&logo=pytest&logoColor=white)](tests)
   [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat)](LICENSE)
   [![Release](https://img.shields.io/github/v/release/edycutjong/salvo?style=flat&logo=github&label=release&color=8b5cf6)](https://github.com/edycutjong/salvo/releases)
   [![CI/CD Pipeline](https://img.shields.io/github/actions/workflow/status/edycutjong/salvo/ci.yml?branch=main&style=flat&logo=githubactions&logoColor=white&label=CI%2FCD)](https://github.com/edycutjong/salvo/actions/workflows/ci.yml)
@@ -71,7 +71,7 @@ Genblaze's `S3StorageBackend`; the app auto-detects credentials at startup.
 
 ```bash
 uv sync --extra dev
-OFFLINE=1 .venv/bin/python -m pytest  # 19 tests, all green
+OFFLINE=1 .venv/bin/python -m pytest  # 37 tests, all green
 OFFLINE=1 .venv/bin/python -m uvicorn app.main:app --port 8000
 ```
 
@@ -96,7 +96,7 @@ curl -X POST localhost:8000/campaigns \
 
 ## ✅ Tests
 
-19 pytest tests (`OFFLINE=1 .venv/bin/python -m pytest`) covering: the campaign runs
+37 pytest tests (`OFFLINE=1 .venv/bin/python -m pytest`) covering: the campaign runs
 offline end-to-end, the ranking is deterministic + explainable, the top-3 are the three
 highest scorers, manifest provenance verifies, stored variant PNGs are valid, and the
 FastAPI surface (health, create/fetch, PNG serving).
