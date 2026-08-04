@@ -33,9 +33,9 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://salvo.edycu.dev'),
-  title: 'Salvo — Scored Ad Variants from One Brief | Batch Creative Factory on Genblaze + Backblaze B2',
+  title: 'Salvo — Scored Ad Variants from One Brief',
   description:
-    'Brief in → N scored ad variants out — the best three ship. Salvo is a batch creative factory on Genblaze + Backblaze B2: real pipeline fan-out, verified provenance, explainable deterministic ad ranking. Zero credentials to demo.',
+    'Brief in → N scored ad variants out, best three ship. A batch creative factory on Genblaze + Backblaze B2 with verified provenance and explainable ranking.',
   applicationName: 'Salvo',
   keywords: [
     'ad variants',
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     siteName: 'Salvo',
     title: 'Salvo — one ad is a guess, a salvo is a decision',
     description:
-      'Brief in → N scored ad variants out — best three ship. Batch creative factory on Genblaze + Backblaze B2 with explainable, reproducible ranking.',
+      'Brief in → N scored ad variants out, best three ship. Explainable, reproducible ranking on Genblaze + Backblaze B2.',
     images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Salvo — scored ad variants from one brief' }],
   },
   twitter: {
