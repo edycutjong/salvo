@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v1.8.0 (2026-08-04)
+
+### Chores
+
+- **landing**: Refresh icon-512 + og-image assets
+  ([`0bce0d8`](https://github.com/edycutjong/salvo/commit/0bce0d8802560ebf48886a901784db0e54e7e9ae))
+
+### Features
+
+- **landing**: Live release-version badge in footer
+  ([`f51a076`](https://github.com/edycutjong/salvo/commit/f51a076dedab715a585340f16ab600f1f024e31c))
+
+
 ## v1.7.1 (2026-08-04)
 
 ### Continuous Integration
