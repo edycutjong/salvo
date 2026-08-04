@@ -1,6 +1,120 @@
 # CHANGELOG
 
 
+## v1.7.0 (2026-08-04)
+
+### Chores
+
+- Verify single-path Railway deploy after GitHub disconnect (no-op)
+  ([`3c56478`](https://github.com/edycutjong/salvo/commit/3c56478382f4717d4970a9c551162e1f62bdd6aa))
+
+### Continuous Integration
+
+- Tolerate Railway 'Failed to stream build logs' flake — verify deploy via /healthz instead of
+  failing on log-stream error
+  ([`cae49ad`](https://github.com/edycutjong/salvo/commit/cae49ad3841ae32269cda251a5ae4ba21c000f95))
+
+### Documentation
+
+- **readme**: Correct test count 19 → 37 (accurate count)
+  ([`6817733`](https://github.com/edycutjong/salvo/commit/6817733b8aa166781b04de5766056e291e3dc1d5))
+
+### Features
+
+- Author credit in README footer + expand landing footer socials
+  ([`8065845`](https://github.com/edycutjong/salvo/commit/8065845a2cf502d90b23bc4222a6cbc79d142689))
+
+
+## v1.6.0 (2026-08-03)
+
+### Documentation
+
+- **readme**: Add Devpost project badge
+  ([`60d13fb`](https://github.com/edycutjong/salvo/commit/60d13fbcaea6b90468e4b0c10c6ff9cdb4023d4a))
+
+### Features
+
+- Credit sponsors (Backblaze + GMI Cloud) in README, landing footer, and pitch deck
+  ([`c054eb4`](https://github.com/edycutjong/salvo/commit/c054eb45629f3419e98c232e1ced9d6bc1f1170b))
+
+
+## v1.5.0 (2026-08-03)
+
+### Features
+
+- Wire real demo video URL everywhere — README badge, landing footer, pitch deck Ask slide
+  ([`48bce63`](https://github.com/edycutjong/salvo/commit/48bce63e70a7695b62a0ab709111a7f7d897cf26))
+
+
+## v1.4.0 (2026-08-03)
+
+### Features
+
+- **pitch**: Rebuild deck to full spec — 10 slides, presenter mode (P), ESC overview, contrast debug
+  (C), print-to-PDF (10 pages), cover animation, doc-quality architecture, real console screenshot
+  with numbered callouts, QR ask
+  ([`cd97df0`](https://github.com/edycutjong/salvo/commit/cd97df0f6f2ba0cba0724f96cca504fe4376759e))
+
+
+## v1.3.0 (2026-08-03)
+
+### Features
+
+- **pitch**: Add branded single-file pitch deck at /pitch.html (keyboard/swipe nav, 8 slides)
+  ([`2ec5a60`](https://github.com/edycutjong/salvo/commit/2ec5a60ec377e77de003e41e5b4e3d4e768a4eeb))
+
+
+## v1.2.1 (2026-08-03)
+
+### Bug Fixes
+
+- **console**: Rich idle state with scoring-rubric cards (fills empty void), slimmer variant
+  thumbnail with gradient backdrop
+  ([`b54ab22`](https://github.com/edycutjong/salvo/commit/b54ab22e83dc38a637d5c9eb426d7e720bd24fd4))
+
+
+## v1.2.0 (2026-08-03)
+
+### Features
+
+- **console+landing**: Redesign console to match landing (brand fonts, white gradient button, preset
+  chips); swap hero 📝 emoji for Crosshair icon
+  ([`8bcb733`](https://github.com/edycutjong/salvo/commit/8bcb733209eaf2552cb27297161e76af6b5c0a83))
+
+
+## v1.1.2 (2026-08-03)
+
+### Bug Fixes
+
+- **security**: Next 15 + React 19 + postcss/sharp pins (landing) and force Pillow≥12.3.0 (uv
+  override) — clears 42 Dependabot alerts; tests green
+  ([`809df99`](https://github.com/edycutjong/salvo/commit/809df992c3e17261063d5eddf94f56e4f855a906))
+
+
+## v1.1.1 (2026-08-03)
+
+### Bug Fixes
+
+- **landing**: White text on primary buttons (was dark, low-contrast) + single-line brief input
+  aligned with controls
+  ([`6c3187c`](https://github.com/edycutjong/salvo/commit/6c3187c94d2c8a2bbf00fe1546a897742186a457))
+
+### Build System
+
+- **deps**: Bump fastapi>=0.141.1, httpx>=0.28.1, pytest-asyncio>=1.4.0, pytest-cov>=7.1.0
+  ([`303fdbe`](https://github.com/edycutjong/salvo/commit/303fdbe1fac6d40c587eb8d7d1e26e3bfb3aace2))
+
+### Chores
+
+- Prune unused docs assets + landing/readme polish
+  ([`7818dae`](https://github.com/edycutjong/salvo/commit/7818daef58ae1f1d0aefad79f6af9ef9bc48f6c1))
+
+### Documentation
+
+- **readme**: Add tests/license/release/CI status badges
+  ([`1860468`](https://github.com/edycutjong/salvo/commit/1860468fab912722d2034c6da3320b443ac4e0a9))
+
+
 ## v1.1.0 (2026-08-03)
 
 ### Chores
@@ -29,3 +143,5 @@
 
 
 ## v1.0.0 (2026-08-03)
+
+- Initial Release
