@@ -1,5 +1,6 @@
 import { Github, Globe, Mail, Twitter } from 'lucide-react';
 import { LINKS } from '@/lib/links';
+import { ReleaseBadge } from '@/components/release-badge';
 
 const SOCIALS = [
   { label: 'GitHub', href: 'https://github.com/edycutjong', Icon: Github },
@@ -135,9 +136,12 @@ export function Footer() {
           <p className="font-mono text-[11px] text-ink-faint">
             © 2026 Salvo · MIT licensed · built for the Backblaze Generative Media Hackathon
           </p>
-          <p className="font-mono text-[11px] text-ink-faint">
-            one ad is a guess — <span className="text-flare-strong">a salvo is a decision</span>
-          </p>
+          <div className="flex flex-col items-start gap-2 sm:items-end">
+            <ReleaseBadge />
+            <p className="font-mono text-[11px] text-ink-faint">
+              one ad is a guess — <span className="text-flare-strong">a salvo is a decision</span>
+            </p>
+          </div>
         </div>
       </div>
     </footer>
