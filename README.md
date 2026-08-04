@@ -1,6 +1,6 @@
 <div align="center">
   <img src="docs/icon-animated.svg" alt="Salvo Icon" width="144">
-  <h1>🎯 Salvo</h1>
+  <h1>📝 Salvo</h1>
   <p><em>Brief in → scored ad variants out — best three ship</em></p>
   <img src="docs/readme-hero-animated.svg" alt="Salvo Hero Banner" width="100%">
 
@@ -120,3 +120,9 @@ Built for the **[Backblaze Generative Media Hackathon](https://backblaze-generat
 ## 📄 License
 
 [MIT](LICENSE) © 2026 Edy Cu
+
+---
+
+<div align="center">
+  <sub>Built by <a href="https://edycu.dev"><b>Edy Cu Tjong</b></a> · <a href="https://github.com/edycutjong">GitHub</a> · <a href="https://x.com/edycutjong">X</a> · <a href="mailto:edy.cu@live.com">Email</a></sub>
+</div>

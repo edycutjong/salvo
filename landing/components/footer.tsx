@@ -1,5 +1,12 @@
-import { Github } from 'lucide-react';
+import { Github, Globe, Mail, Twitter } from 'lucide-react';
 import { LINKS } from '@/lib/links';
+
+const SOCIALS = [
+  { label: 'GitHub', href: 'https://github.com/edycutjong', Icon: Github },
+  { label: 'X (@edycutjong)', href: 'https://x.com/edycutjong', Icon: Twitter },
+  { label: 'Website — edycu.dev', href: 'https://edycu.dev', Icon: Globe },
+  { label: 'Email', href: 'mailto:edy.cu@live.com', Icon: Mail },
+];
 
 /** Element 11 — multi-column footer: product, stack, hackathon, legal. */
 
@@ -66,15 +73,23 @@ export function Footer() {
               <br />
               This page is a static export — the product does the talking.
             </p>
-            <a
-              href={LINKS.github}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Salvo on GitHub"
-              className="mt-6 inline-grid h-10 w-10 place-items-center rounded-full border border-line text-ink-muted transition-all duration-200 hover:scale-110 hover:border-line-strong hover:text-ink"
-            >
-              <Github size={17} />
-            </a>
+            <div className="mt-6 flex items-center gap-2.5">
+              {SOCIALS.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith('mailto:') ? undefined : '_blank'}
+                  rel={href.startsWith('mailto:') ? undefined : 'noreferrer'}
+                  aria-label={label}
+                  className="inline-grid h-10 w-10 place-items-center rounded-full border border-line text-ink-muted transition-all duration-200 hover:scale-110 hover:border-line-strong hover:text-ink"
+                >
+                  <Icon size={17} />
+                </a>
+              ))}
+            </div>
+            <p className="mt-5 font-mono text-[11px] text-ink-faint">
+              Built by <a href="https://edycu.dev" target="_blank" rel="noreferrer" className="text-ink-muted underline-offset-2 hover:text-flare-strong hover:underline">Edy Cu Tjong</a>
+            </p>
           </div>
 
           {/* Link columns */}
