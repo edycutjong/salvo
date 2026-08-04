@@ -123,10 +123,10 @@ export function Footer() {
           <span className="font-mono text-[10.5px] uppercase tracking-kicker text-ink-faint">Sponsored by</span>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a href={LINKS.backblaze} target="_blank" rel="noreferrer" aria-label="Backblaze" className="rounded-xl bg-white px-5 py-3 shadow-sm transition-transform duration-200 hover:scale-105">
-              <img src="./sponsors/backblaze.png" alt="Backblaze" className="h-7 w-auto" />
+              <img src="./sponsors/backblaze.png" alt="Backblaze" width={351} height={110} className="h-7 w-auto" />
             </a>
             <a href="https://www.gmicloud.ai" target="_blank" rel="noreferrer" aria-label="GMI Cloud" className="rounded-xl bg-white px-5 py-3 shadow-sm transition-transform duration-200 hover:scale-105">
-              <img src="./sponsors/gmi.png" alt="GMI Cloud" className="h-7 w-auto" />
+              <img src="./sponsors/gmi.png" alt="GMI Cloud" width={365} height={110} className="h-7 w-auto" />
             </a>
           </div>
         </div>
