@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v1.7.1 (2026-08-04)
+
+### Continuous Integration
+
+- **release**: Set semantic-release changelog mode=init + backfill CHANGELOG
+  ([`83bb995`](https://github.com/edycutjong/salvo/commit/83bb995a2b877a3d0b8fa3c563c3d390fc31a370))
+
+### Performance Improvements
+
+- **landing**: Set explicit dimensions on footer sponsor logos
+  ([`500f7c7`](https://github.com/edycutjong/salvo/commit/500f7c7a793eb2d2fb4bf25bfd3d5e8fc19e2dc2))
+
+
 ## v1.7.0 (2026-08-04)
 
 ### Chores
