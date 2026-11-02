@@ -15,7 +15,7 @@ dependencies = [
     "httpx>=0.28.1",
     # Security floor for a transitive dep (via pyasn1-modules): pyasn1 < 0.6.4 has
     # three HIGH DoS advisories. Pin the floor to force the patched release.
-    "pyasn1>=0.6.4",
+    "pyasn1>=0.6.5",
 ]
 
 [project.optional-dependencies]
